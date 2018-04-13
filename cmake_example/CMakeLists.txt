@@ -5,7 +5,11 @@ find_package(noos)
 message(STATUS "libraries: ${NOOS_STATIC_LIBRARIES}")
 message(STATUS "headers: ${NOOS_INCLUDE_DIRS}")
 
-add_executable(face_detection main.cpp)
+add_executable(face_detection main.cpp
+                              src/detect_faces.cpp
+                              src/common.cpp
+                              src/move_head.cpp
+              )
 
 #ALDEBARAN
 set(NAOQI ${NAOQI} "$ENV{HOME}/naoqi-sdk-2.1.4.13-linux32/")

@@ -1,4 +1,4 @@
-#include "face_detection.hpp"
+#include "common.hpp"
 
 void get_image::operator()(const std::string& robotIp, 
                            cv::Mat& noos_image)
@@ -38,28 +38,10 @@ void get_image::operator()(const std::string& robotIp,
     camProxy.unsubscribe(clientName);
 }
 
-face_detection::face_detection(std::string user,
-                               std::string pass)
-: platform__{"85.10.206.221", "9001", pass, user},
-  query__(std::bind(&face_detection::callback, this, std::placeholders::_1),
-                    platform__)
-{}
-
-void vision::send(cv::Mat pic)
+noos::object::picture mat_to_pic::operator()(cv::Mat img)
 {
-    //TODO: check how to pass the binary directly to std::vector<bytes> (no opencv)
-    query__.object = face_detection(mat_to_picture()(pic));
-    query__.send();
-}
-void face_detection::callback(std::vector<noos::object::face> faces)
-{
-    std::cout << "Found: " << faces.size() << " faces" << std::endl; 
-    for(auto each_face : faces) {
-        cv::rectangle(frame,
-                      cv::Point(each_face.top_left_x, each_face.top_left_y),
-                      cv::Point(each_face.bottom_right_x, each_face.bottom_right_x),
-                      cv::Scalar(255,0,0),
-                      1, 8, 0);
-        cv::imwrite("Face.png",frame);
-    }
+    std::vector<unsigned char> buf;
+    cv::imencode(".png", img, buf);
+    std::vector<noos::types::byte> conversion(buf.begin(), buf.end());
+    return noos::object::picture(conversion);
 }
