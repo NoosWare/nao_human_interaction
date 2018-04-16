@@ -33,3 +33,6 @@
 
 qibuild_example/build-mytoolchain/
 cmake_example/build/
+
+*.swp
+*.swo

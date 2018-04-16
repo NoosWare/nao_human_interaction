@@ -15,10 +15,14 @@ public:
     move_head(const std::string & robotIP);
 
     ///@brief move the head to the indicated angle
-    void move(float angle,
+    void move(float & angle,
               float time);
 
+    ///@brief stop moving head
+    void stop();
 private:
+
+    bool check_angle(float & angle);
 
     // The name of the joint to be moved
     static const AL::ALValue jointName__;

@@ -7,9 +7,9 @@
  */
 int main(int argc, char* argv[])
 {
-    if (argc < 2)
+    if (argc < 3)
     {
-        std::cerr << "Usage 'robotIp'" << std::endl;
+        std::cerr << "Usage 'robotIp' 'reset head(bool)'" << std::endl;
         return 1;
     }
 
@@ -25,31 +25,37 @@ int main(int argc, char* argv[])
      * from the camera of NAO and create a picture object with this 
      * image. After that we make the call to do the face detection
      */
-    /*
-    for (;;) {
-        auto now = boost::chrono::system_clock::now();
-        auto elapsed = boost::chrono::duration_cast<boost::chrono::milliseconds>(now - before).count(); 
+    std::stringstream ss(argv[2]);
+    bool reset;
+    ss >> std::boolalpha >> reset;
+    if (!reset) {
+        for (;;) {
+            auto now = boost::chrono::system_clock::now();
+            auto elapsed = boost::chrono::duration_cast<boost::chrono::milliseconds>(now - before).count(); 
 
-        if (elapsed > 500) {
-            try
-            {
-               get_image()(robotIp, frame);
-            }
-            catch (const AL::ALError& e)
-            {
-                std::cerr << "Caught exception " << e.what() << std::endl;
-            }
-            
-            if(!frame.empty()) {
-                faces_detected.send(frame);
-                before = now;
+            if (elapsed > 500) {
+                try
+                {
+                   get_image()(robotIp, frame);
+                }
+                catch (const AL::ALError& e)
+                {
+                    std::cerr << "Caught exception " << e.what() << std::endl;
+                }
+                
+                if(!frame.empty()) {
+                    faces_detected.send(frame);
+                    before = now;
+                }
             }
         }
     }
-    */
-
-    move_head head(robotIp);
-    head.move(1.5, 3);
+    else {
+        move_head head(robotIp);
+        float angle_zero = 0.0f;
+        head.move(angle_zero, 2.0f);
+        head.stop();
+    }
 
     return 0;
 }
