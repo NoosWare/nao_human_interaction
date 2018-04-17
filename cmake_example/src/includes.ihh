@@ -12,6 +12,8 @@
 //Common
 #include <iostream>
 #include <string>
+#include <functional>
+#include <future>
 
 // NOOS API includes
 #include <noos/noos>

@@ -9,6 +9,7 @@ add_executable(face_detection main.cpp
                               src/detect_faces.cpp
                               src/common.cpp
                               src/move_head.cpp
+                              src/state.cpp
               )
 
 #ALDEBARAN

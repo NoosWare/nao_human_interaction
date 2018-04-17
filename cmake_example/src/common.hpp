@@ -16,7 +16,7 @@ struct get_image
 };
 
 /**
- * @brief Connvert cv::Mat to a vector<noos::types::bytes>
+ * @brief Convert cv::Mat to a vector<noos::types::bytes>
  * @struct mat_to_pic
  * @date 13.04.2018
  */
@@ -25,4 +25,19 @@ struct mat_to_pic
     noos::object::picture operator()(cv::Mat image);
 };
 
+
+/**
+ * @brief Contains the ip of the robot
+ * @struct robot_ip
+ * @date 17.04.2018
+ */
+struct robot_ip
+{
+    ///@brief  robot ip
+    static std::string ip;
+
+protected:
+    static void set_ip(std::string new_ip);
+
+};
 #endif 

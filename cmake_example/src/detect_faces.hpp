@@ -13,8 +13,8 @@
 struct face_location
 {
     ///@return true if the image is centred
-    bool operator()(float top_x,
-                    float bottom_x,
+    bool operator()(noos::object::face face,
+                    float size,
                     float & angle,
                     float & time);
 };
@@ -30,15 +30,16 @@ public:
     ///@brief constructor
     detect_faces(noos::cloud::platform plat);
 
+    ///@brief constructor adding callback
+    detect_faces(noos::cloud::platform plat,
+                 std::function<void(std::vector<noos::object::face>)> cb);
+
     ///@brief send the image to the cloud
     void send(const cv::Mat & pic);
 
 private:
     // callback
     void callback(std::vector<noos::object::face> faces);
-
-    // remove false positives
-    bool is_false_positive(noos::object::face face);
 
     // callable for face_detection
     noos::cloud::callable<noos::cloud::face_detection, true> query__;

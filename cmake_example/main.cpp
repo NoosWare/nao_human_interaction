@@ -33,19 +33,18 @@ int main(int argc, char* argv[])
             auto now = boost::chrono::system_clock::now();
             auto elapsed = boost::chrono::duration_cast<boost::chrono::milliseconds>(now - before).count(); 
 
-            if (elapsed > 500) {
+            if (elapsed > 200) {
                 try
                 {
                    get_image()(robotIp, frame);
+                    if(!frame.empty()) {
+                        faces_detected.send(frame);
+                        before = now;
+                    }
                 }
                 catch (const AL::ALError& e)
                 {
                     std::cerr << "Caught exception " << e.what() << std::endl;
-                }
-                
-                if(!frame.empty()) {
-                    faces_detected.send(frame);
-                    before = now;
                 }
             }
         }

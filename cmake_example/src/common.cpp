@@ -1,5 +1,7 @@
 #include "common.hpp"
 
+std::string robot_ip::ip = "127.0.0.1";
+
 void get_image::operator()(const std::string& robotIp, 
                            cv::Mat& noos_image)
 {
@@ -44,4 +46,9 @@ noos::object::picture mat_to_pic::operator()(cv::Mat img)
     cv::imencode(".png", img, buf);
     std::vector<noos::types::byte> conversion(buf.begin(), buf.end());
     return noos::object::picture(conversion);
+}
+
+void robot_ip::set_ip(std::string new_ip)
+{
+    ip = new_ip;
 }
