@@ -6,20 +6,6 @@
 #include "move_head.hpp"
 
 /**
- * @brief Calculate in which part of the image is the face
- * @struct face_location
- * @date 16.04.2018
- */
-struct face_location
-{
-    ///@return true if the image is centred
-    bool operator()(noos::object::face face,
-                    float size,
-                    float & angle,
-                    float & time);
-};
-
-/**
  * @brief Send an image to the NOOS cloud to detect faces
  * @class face_detection
  * @date 12.04.2018

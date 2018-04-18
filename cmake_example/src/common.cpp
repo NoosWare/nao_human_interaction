@@ -1,6 +1,7 @@
 #include "common.hpp"
 
 std::string robot_ip::ip = "127.0.0.1";
+noos::cloud::platform noos_platform::noos = {"85.10.206.221", "9001", "test_token", "test"};
 
 void get_image::operator()(const std::string& robotIp, 
                            cv::Mat& noos_image)
@@ -51,4 +52,55 @@ noos::object::picture mat_to_pic::operator()(cv::Mat img)
 void robot_ip::set_ip(std::string new_ip)
 {
     ip = new_ip;
+}
+
+void noos_platform::set_platform(std::string user,
+                                 std::string pass)
+{
+    noos.user = user;
+    noos.token = pass;
+}
+
+bool face_location::operator()(float middle,
+                               float & angle,
+                               float & time)
+{
+    /* Divide the image in 6 areas
+     * 0----54----108-------216----270----320
+     * |     |     |    |    |      |      |
+     * |     |     |    |    |      |      |
+     * |  1  |  2  | centre  |  3   |  4   |
+     * |     |     |    |    |      |      |
+     * |     |     |    |    |      |      |
+     * -------------------------------------
+     *  image mirrored!
+     */
+    time = 0.3f;
+    if (middle < 140) { //area left centre
+        angle += 0.1;
+        if (middle < 108) { //area 2
+            angle += 0.1;
+            if (middle < 54) { //area 1
+                angle += 0.2;
+                time += 0.5f;
+            }
+        }
+        return false;
+    }
+
+    if (middle > 170) { //area right centre
+        angle -= 0.1;
+        if (middle > 216) { //area 3
+            angle -= 0.1;
+            if (middle > 270) { //area 4
+                angle -= 0.2;
+                time += 0.5f;
+            }
+        }
+        return false;
+    }
+    std::cout << "Middle x: " << middle  << std::endl;
+    std::cout << "Angle face: " << angle << " Time: " << time << std::endl;
+    std::cout << std::endl;
+    return true; //centre
 }

@@ -14,17 +14,20 @@
  */
 struct state
 {
+    ///@brief face found
+    bool face_found = false;
+
     ///@brief biggest face in the image
     float center_face_x;
 
     ///@brief relative angle needed to centre the face
-    float angle_head;
+    float angle_head = 0.0f;
 
     ///@brief time required to achieve the previous angle
-    float movement_time;
+    float movement_time = 0.0f;
 
     ///@brief time when the state was created
-    boost::chrono::system_clock state_time;
+    boost::chrono::time_point<boost::chrono::system_clock> state_time;
 };
 
 
@@ -37,7 +40,7 @@ class nao_state
 {
 public:
     ///@brief constructor
-    nao_state(noos::cloud::platform plat);
+    nao_state();
 
     ///@brief create a new state
     void new_state();

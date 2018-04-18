@@ -46,7 +46,7 @@ template <class data_type>
 void buffer<data_type>::remove()
 {
     auto now = boost::chrono::system_clock::now();
-    while ((boost::chrono::duration_cast<boost::chrono::milliseconds>(now - buffer_data__.front().time.count())) > 0.1) {
+    while ((boost::chrono::duration_cast<boost::chrono::milliseconds>(now - buffer_data__.front().time.count())) > 100) {
          buffer_data__.pop_front();
     }  
 }
