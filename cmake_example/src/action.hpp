@@ -4,7 +4,7 @@
 #include "includes.ihh"
 #include "state_factory.hpp"
 #include "state.hpp"
-#include "event_timer.hpp"
+//#include "event_timer.hpp"
 
 /**
  * @brief Choose the correct action depending of the state
@@ -19,9 +19,11 @@ public:
     ///@brief constructor
     decide_action();
 
-//private:
+private:
     //@brief take decision
     void do_action();
+
+    boost::asio::io_service io__;
 
 };
 

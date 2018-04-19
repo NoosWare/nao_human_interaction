@@ -36,13 +36,14 @@ private:
  */
 template<class state_type, class state_class>
 state_factory<state_type, state_class>::state_factory()
-//: event_timer(50, true, &state_factory<state_type, state_class>::update_states)
+//: event_timer(50, true, &state_factory<state_type, state_class>::update_states, this)
 {}
 
 template<class state_type, class state_class>
 void state_factory<state_type, state_class>::update_states()
 {
-    states__.add(manage_states__.new_state());
+    //states__.add(manage_states__.new_state());
+    //
 }
 
 #endif

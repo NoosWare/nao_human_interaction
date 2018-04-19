@@ -50,7 +50,7 @@ private:
     void face_callback(std::vector<noos::object::face> faces);
 
     //detect faces in the image
-    detect_faces detecting_faces__;
+    //detect_faces detecting_faces__;
 
     //state
     state state__;

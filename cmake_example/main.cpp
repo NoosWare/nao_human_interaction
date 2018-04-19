@@ -3,6 +3,7 @@
 #include "src/common.hpp"
 #include "src/move_head.hpp"
 #include "src/state_factory.hpp"
+#include "src/action.hpp"
 /*
  * \brief Example of detecting faces with NAO camera
  */
@@ -17,6 +18,7 @@ int main(int argc, char* argv[])
     const std::string robotIp(argv[1]);
     cv::Mat frame;
     noos::cloud::platform info = {"85.10.206.221", "9001", "test_token", "test"};
+    decide_action actions;
     /*
      * Infinite loop 
      * All it does is every 500 ms is going to read the picture
@@ -27,7 +29,7 @@ int main(int argc, char* argv[])
     bool reset;
     ss >> std::boolalpha >> reset;
     if (!reset) {
-        
+        std::cout << "inside" << std::endl; 
     }
     else {
         move_head head(robotIp);

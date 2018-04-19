@@ -1,15 +1,15 @@
 #include "state.hpp"
 
 nao_state::nao_state()
-: detecting_faces__(noos_platform::noos,
-                    std::bind(&nao_state::face_callback, this, std::placeholders::_1))
+//: //detecting_faces__(noos_platform::noos,
+  //                  std::bind(&nao_state::face_callback, this, std::placeholders::_1))
 {}
 
 void nao_state::new_state()
 {
     cv::Mat pic;
     get_image()(robot_ip::ip, pic);
-    detecting_faces__.send(pic);
+    //detecting_faces__.send(pic);
 }
 
 void nao_state::face_callback(std::vector<noos::object::face> faces)

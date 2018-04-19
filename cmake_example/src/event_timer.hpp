@@ -18,8 +18,19 @@ public:
      * @param arguments variable arguments (exactly what you'd feed to std::bind)
      */
     template <class callable, class... arguments>
-    event_timer(int after, bool async, callable&& f, arguments&&... args);
+    event_timer(boost::asio::io_service& io,
+                int after, 
+                callable&& f, 
+                arguments&&... args);
 
+    ///@brief loop method
+    template <class callable, class... arguments>
+    void loop(int after, 
+              callable&& f, 
+              arguments&&... args);
+
+private:
+    boost::asio::deadline_timer timer__;
 };
 
 
@@ -27,22 +38,31 @@ public:
  * Implementation
  */
 template <class callable, class... arguments>
-event_timer::event_timer(int after, bool async, callable&& f, arguments&&... args)
-    {
-        std::function<typename std::result_of<callable(arguments...)>::type()> task(std::bind(std::forward<callable>(f), std::forward<arguments>(args)...));
+event_timer::event_timer(boost::asio::io_service& io,
+                         int after, 
+                         callable&& f, 
+                         arguments&&... args)
+: timer__(io, boost::posix_time::milliseconds(after))
+{
+    loop(after, f, args...);
+}
 
-        if (async)
-        {
-            std::thread([after, task]() {
-                std::this_thread::sleep_for(std::chrono::milliseconds(after));
-                task();
-            }).detach();
-        }
-        else
-        {
-            std::this_thread::sleep_for(std::chrono::milliseconds(after));
-            task();
-        }
-    }
+template <class callable, class... arguments>
+void event_timer::loop(int after, 
+                       callable&& f, 
+                       arguments&&... args)
+{
+    std::function<typename std::result_of<callable(arguments...)>::type()> task(std::bind(std::forward<callable>(f), std::forward<arguments>(args)...));
+
+    task();
+    timer__.expires_at(timer__.expires_at() + boost::posix_time::milliseconds(after));
+    timer__.async_wait(boost::bind(&event_timer::loop<callable, arguments const&...>, 
+                       this, 
+                       std::placeholders::_1, 
+                       std::forward<callable>(f), 
+                       std::forward<arguments>(args)...));
+    
+}
+
 
 #endif
