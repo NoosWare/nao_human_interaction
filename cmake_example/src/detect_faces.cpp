@@ -2,15 +2,13 @@
 
 detect_faces::detect_faces(noos::cloud::platform plat)
 : query__(std::bind(&detect_faces::callback, this, std::placeholders::_1),
-          plat),
-  head__(robot_ip::ip) 
+          plat)
 {}
 
 detect_faces::detect_faces(noos::cloud::platform plat,
                            std::function<void(std::vector<noos::object::face>)> cb)
 : query__(cb,
-          plat),
-  head__(robot_ip::ip) 
+          plat)
 {}
 
 void detect_faces::send(const cv::Mat & pic)

@@ -4,7 +4,7 @@
 #include "includes.ihh"
 #include "state_factory.hpp"
 #include "state.hpp"
-//#include "event_timer.hpp"
+#include "event_timer.hpp"
 
 /**
  * @brief Choose the correct action depending of the state
@@ -12,8 +12,6 @@
  * @date 18.04.2018
  */
 class decide_action
-: public state_factory<state, nao_state>,
-  public event_timer
 {
 public:
     ///@brief constructor
@@ -24,6 +22,8 @@ private:
     void do_action();
 
     boost::asio::io_service io__;
+    timer clock__;
+    state_factory<state, nao_state> factory__;
 
 };
 

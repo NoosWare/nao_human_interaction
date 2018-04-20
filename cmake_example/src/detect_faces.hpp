@@ -3,7 +3,7 @@
 
 #include "includes.ihh"
 #include "common.hpp"
-#include "move_head.hpp"
+#include "configuration.hpp"
 
 /**
  * @brief Send an image to the NOOS cloud to detect faces
@@ -32,8 +32,6 @@ private:
     //image
     cv::Mat pic__;
 
-    // move head to center face
-    move_head head__;
     float angle_head__ = 0.0f;
 
 };

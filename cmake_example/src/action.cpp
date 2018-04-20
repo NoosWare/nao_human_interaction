@@ -1,10 +1,15 @@
 #include "action.hpp"
 
 decide_action::decide_action()
-: event_timer(io__, 100, false, &decide_action::do_action, this)
-{}
+: io__(),
+  clock__(io__, boost::bind(&decide_action::do_action, this), 100),
+  factory__(io__)
+{
+    io__.run();
+}
 
 void decide_action::do_action()
 {
-    std::cout << "Do actions" << std::endl;   
+    auto latest_state = factory__.last_state();
+    printf(" action \n");
 }

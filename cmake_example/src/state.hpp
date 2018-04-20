@@ -43,14 +43,14 @@ public:
     nao_state();
 
     ///@brief create a new state
-    void new_state();
+    state new_state();
     
 private:
     //face_detection callback
     void face_callback(std::vector<noos::object::face> faces);
 
     //detect faces in the image
-    //detect_faces detecting_faces__;
+    detect_faces detecting_faces__;
 
     //state
     state state__;
