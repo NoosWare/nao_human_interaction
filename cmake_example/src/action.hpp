@@ -5,6 +5,7 @@
 #include "state_factory.hpp"
 #include "state.hpp"
 #include "event_timer.hpp"
+#include "move_head.hpp"
 
 /**
  * @brief Choose the correct action depending of the state
@@ -12,18 +13,22 @@
  * @date 18.04.2018
  */
 class decide_action
+: public state_factory<state, nao_state>,
+  public move_head
 {
 public:
     ///@brief constructor
     decide_action();
 
+    ///@brief destructor
+    ~decide_action();
+
 private:
     //@brief take decision
     void do_action();
 
-    boost::asio::io_service io__;
     timer clock__;
-    state_factory<state, nao_state> factory__;
+    std::vector<std::thread> threads__;
 
 };
 

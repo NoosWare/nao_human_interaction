@@ -15,7 +15,7 @@ class state_factory
 {
 public:
     ///@brief constructor
-    state_factory(boost::asio::io_service & io);
+    state_factory();
 
     ///@brief update the buffer
     void update_states();
@@ -35,9 +35,11 @@ private:
  * Implementationn
  */
 template<class state_type, class state_class>
-state_factory<state_type, state_class>::state_factory(boost::asio::io_service & io)
-: timer_update__(io, boost::bind(&state_factory<state_type, state_class>::update_states, this), 50)
-{}
+state_factory<state_type, state_class>::state_factory()
+: timer_update__(boost::bind(&state_factory<state_type, state_class>::update_states, this), 200)
+{
+    timer_update__.start();
+}
 
 template<class state_type, class state_class>
 void state_factory<state_type, state_class>::update_states()

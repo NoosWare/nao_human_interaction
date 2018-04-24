@@ -2,6 +2,7 @@
 #define MOVE_HEAD_HPP
 
 #include "includes.ihh"
+#include "configuration.hpp"
 
 /**
  * @brief Move the NAO's head
@@ -12,10 +13,10 @@ class move_head
 {
 public:
     ///@brief constructor
-    move_head(const std::string & robotIP);
+    move_head();
 
     ///@brief move the head to the indicated angle
-    void move(float & angle,
+    void move(float angle,
               float time);
 
     ///@brief stop moving head

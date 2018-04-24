@@ -28,6 +28,9 @@ struct state
 
     ///@brief time when the state was created
     boost::chrono::time_point<boost::chrono::system_clock> state_time;
+
+    ///@brief reset the data
+    void reset();
 };
 
 

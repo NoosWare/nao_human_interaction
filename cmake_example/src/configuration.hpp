@@ -44,6 +44,7 @@ class configuration
 : public noos_platform,
   public robot_ip
 {
+public:
    ///@brief set ip
    void set_ip_nao(std::string ip);
 

@@ -2,8 +2,8 @@
 
 const AL::ALValue move_head::jointName__ = "HeadYaw";
 
-move_head::move_head(const std::string & robotIP)
-: motion__(robotIP, 9559)
+move_head::move_head()
+: motion__(robot_ip::ip, 9559)
 {
     /** Make sure the head is stiff to be able to move it.
     * To do so, make the stiffness go to the maximum in one second.
@@ -16,7 +16,7 @@ move_head::move_head(const std::string & robotIP)
     motion__.stiffnessInterpolation(jointName__, stiffness, time);
 }
 
-void move_head::move(float & angle,
+void move_head::move(float angle,
                      float time)
 {
 
@@ -41,7 +41,7 @@ void move_head::stop()
     AL::ALValue stiffness = 0.0f;
     /** Time (in seconds) to reach the target. */
     AL::ALValue time = 1.0f;
-     motion__.stiffnessInterpolation(jointName__, stiffness, time);
+    motion__.stiffnessInterpolation(jointName__, stiffness, time);
    
 }
 
