@@ -3,7 +3,6 @@
 void state::reset()
 {
     face_found = false;
-    angle_head = 0.0f;
     movement_time = 0.0f;
     state_time = boost::chrono::system_clock::now();
 }

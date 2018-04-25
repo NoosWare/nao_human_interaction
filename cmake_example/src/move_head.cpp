@@ -16,7 +16,7 @@ move_head::move_head()
     motion__.stiffnessInterpolation(jointName__, stiffness, time);
 }
 
-void move_head::move(float angle,
+void move_head::move(float & angle,
                      float time)
 {
 

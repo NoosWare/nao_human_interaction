@@ -15,7 +15,7 @@ class state_factory
 {
 public:
     ///@brief constructor
-    state_factory();
+    state_factory(boost::asio::io_service & io);
 
     ///@brief update the buffer
     void update_states();
@@ -25,33 +25,33 @@ public:
 
 private:
     //state class
-    state_class manage_states__;
-    timer timer_update__;
+    state_class manage_states_;
+    timer timer_update_;
     //buffer of states
-    buffer<state_type> states__;
+    buffer<state_type> states_;
+
+
 };
 
 /*
  * Implementationn
  */
 template<class state_type, class state_class>
-state_factory<state_type, state_class>::state_factory()
-: timer_update__(boost::bind(&state_factory<state_type, state_class>::update_states, this), 200)
-{
-    timer_update__.start();
-}
+state_factory<state_type, state_class>::state_factory(boost::asio::io_service & io)
+: timer_update_(io, boost::bind(&state_factory<state_type, state_class>::update_states, this), 100)
+{}
 
 template<class state_type, class state_class>
 void state_factory<state_type, state_class>::update_states()
 {
     printf(" state_factory ");
-    states__.add(manage_states__.new_state());
+    states_.add(manage_states_.new_state()); 
 }
 
 template<class state_type, class state_class>
 state_type state_factory<state_type, state_class>::last_state()
 {
-    return states__.get_latest();
+    return states_.get_latest();
 }
 
 #endif

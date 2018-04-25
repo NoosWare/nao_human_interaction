@@ -18,10 +18,9 @@ public:
      * @param task callback which is going to be called every x milliseconds
      * @param time time to wait between calls
      */
-    timer(std::function<void(void)> task,
+    timer(boost::asio::io_service & io,
+          std::function<void(void)> task,
           int time);
-    ///@brief start timer
-    void start();
 
     ///@brief manage the timer loop 
     void loop();
@@ -30,10 +29,8 @@ public:
     void stop();
 
 private:
-    boost::asio::io_service io__;
-    boost::asio::deadline_timer timer__;
-    std::function<void(void)> repetitive_task__;
-    int time_wait__;
-    std::thread thread__;
+    boost::asio::deadline_timer timer_;
+    std::function<void(void)> repetitive_task_;
+    int time_wait_;
 };
 #endif

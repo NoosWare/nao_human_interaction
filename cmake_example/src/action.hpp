@@ -13,8 +13,7 @@
  * @date 18.04.2018
  */
 class decide_action
-: public state_factory<state, nao_state>,
-  public move_head
+: public move_head
 {
 public:
     ///@brief constructor
@@ -23,13 +22,18 @@ public:
     ///@brief destructor
     ~decide_action();
 
+    ///@brief start
+    void start();
+
 private:
     //@brief take decision
     void do_action();
 
-    timer clock__;
-    std::vector<std::thread> threads__;
+    boost::asio::io_service io1_;
+    //boost::asio::io_service io2_;
 
+    state_factory<state, nao_state> factory_; 
+    timer clock_;
 };
 
 #endif

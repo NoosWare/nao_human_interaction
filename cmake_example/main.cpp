@@ -8,6 +8,19 @@
 /*
  * \brief Example of detecting faces with NAO camera
  */
+
+
+void test1()
+{
+    printf("action1 \n");
+}
+
+void test2()
+{
+    boost::this_thread::sleep_for(boost::chrono::milliseconds(80));
+    printf("action 2 \n");
+}
+
 int main(int argc, char* argv[])
 {
     if (argc < 3)
@@ -21,12 +34,14 @@ int main(int argc, char* argv[])
     configuration parameters;
     parameters.set_ip_nao(robotIp);
     parameters.set_noos("test", "test_token");
+
+    decide_action actions;
     
     std::stringstream ss(argv[2]);
     bool reset;
     ss >> std::boolalpha >> reset;
     if (!reset) {
-        decide_action actions;
+        actions.start();
     }
     else {
         move_head head;
