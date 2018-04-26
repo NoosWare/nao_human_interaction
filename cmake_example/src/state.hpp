@@ -2,7 +2,6 @@
 #define STATE_HPP
 
 #include "includes.ihh"
-#include "event_timer.hpp"
 #include "buffer.hpp"
 #include "detect_faces.hpp"
 #include "common.hpp"
@@ -53,10 +52,13 @@ private:
     void face_callback(std::vector<noos::object::face> faces);
 
     //detect faces in the image
-    detect_faces detecting_faces__;
+    detect_faces detecting_faces_;
 
     //state
-    state state__;
+    state state_;
+
+    //image
+    cv::Mat image_;
 
 };
 #endif

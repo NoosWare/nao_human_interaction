@@ -33,9 +33,21 @@ struct mat_to_pic
 struct face_location
 {
     ///@return true if the image is centred
-    bool operator()(float middle,
+    void operator()(float middle,
                     float & angle,
                     float & time);
+};
+
+/**
+ * @brief calculate the maximun size in the faces found
+ * @struct bigger_face
+ * @date 26.04.2018
+ */
+struct bigger_face
+{
+    void operator()(const std::vector<noos::object::face> faces,
+                    int & position,
+                    int & max_size);
 };
 
 #endif 

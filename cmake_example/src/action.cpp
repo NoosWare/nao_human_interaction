@@ -18,7 +18,6 @@ void decide_action::start()
       // If no handlers ran, then sleep.
       if (0 == ran)
       {
-          printf(" WTF ");
         boost::this_thread::sleep_for(boost::chrono::milliseconds(50));
       }
     }
@@ -27,6 +26,8 @@ void decide_action::start()
 
 void decide_action::do_action()
 {
+    auto now = boost::chrono::system_clock::now();
+
     auto latest_state = factory_.last_state();
     if (latest_state.face_found &&
         latest_state.angle_head != 0) {
@@ -34,7 +35,7 @@ void decide_action::do_action()
                         latest_state.movement_time); 
         printf("moving head? \n");
     }
-    printf("LATEST_STATE: face found %d \n", latest_state.face_found);
+    printf("ACTION_TIME: %lld \n", boost::chrono::duration_cast<boost::chrono::milliseconds>(boost::chrono::system_clock::now() - now).count());
 }
 
 decide_action::~decide_action()

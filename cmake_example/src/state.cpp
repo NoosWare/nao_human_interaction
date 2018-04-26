@@ -8,19 +8,22 @@ void state::reset()
 }
 
 nao_state::nao_state()
-: detecting_faces__(noos_platform::noos,
+: detecting_faces_(noos_platform::noos,
                     std::bind(&nao_state::face_callback, this, std::placeholders::_1))
 {}
 
 state nao_state::new_state()
 {
-    state__.reset();
-    cv::Mat pic;
-    get_image()(robot_ip::ip, pic);
+    state_.reset();
+    auto now = boost::chrono::system_clock::now();
+    
+    get_image()(robot_ip::ip, image_);
+
+    printf("get_image: %lld \n", boost::chrono::duration_cast<boost::chrono::milliseconds>(boost::chrono::system_clock::now() - now).count());
     if (!pic.empty()) {
-        detecting_faces__.send(pic);
+        detecting_faces_.send(image_);
     }
-    return state__;
+    return state_;
 }
 
 void nao_state::face_callback(std::vector<noos::object::face> faces)
@@ -29,20 +32,13 @@ void nao_state::face_callback(std::vector<noos::object::face> faces)
     if (faces.size() != 0) { 
         int i = 0;
         int max_size = 0;
-        for(int j = 0; j < faces.size(); j++) {
-            auto size = faces.at(j).bottom_right_x - faces.at(j).top_left_x;
-            if (size > max_size) {
-                max_size = size;
-                i = j;
-            }
-        }
-        state__.center_face_x = faces.at(i).top_left_x + max_size/2;
-        face_location()(state__.center_face_x,
-                        state__.angle_head,
-                        state__.movement_time);
-        state__.face_found = true;
+        bigger_face(faces, i, max_size);
+        state_.center_face_x = faces.at(i).top_left_x + max_size/2;
+        face_location()(state_.center_face_x,
+                        state_.angle_head,
+                        state_.movement_time);
+        state_.face_found = true;
     }
-    state__.state_time = boost::chrono::system_clock::now();
-    printf("angle after callback: %.2f \n", state__.angle_head); 
-
+    state_.state_time = boost::chrono::system_clock::now();
+    printf("angle after callback: %.2f \n", state_.angle_head); 
 }

@@ -48,7 +48,6 @@ template <class data_type>
 void buffer<data_type>::remove()
 {
     auto now = boost::chrono::system_clock::now();
-    printf("checking time to remove: %lld \n", boost::chrono::duration_cast<boost::chrono::milliseconds>(now - buffer_data__.front().state_time).count());
     while ((boost::chrono::duration_cast<boost::chrono::milliseconds>(now - buffer_data__.front().state_time).count()) > 100 &&
            buffer_data__.size() > 1) {
          buffer_data__.pop_front();

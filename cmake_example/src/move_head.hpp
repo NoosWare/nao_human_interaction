@@ -15,6 +15,9 @@ public:
     ///@brief constructor
     move_head();
 
+    ///@brief destructor
+    ~move_head();
+
     ///@brief move the head to the indicated angle
     void move(float & angle,
               float time);
