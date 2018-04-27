@@ -5,6 +5,20 @@
 #include "configuration.hpp"
 
 /**
+ * @brief data needed for move the head
+ * @struct head
+ * @date 27.04.2018
+ */
+struct head
+{
+    ///@brief relative angle needed to centre the face
+    float angle_head = 0.0f;
+
+    ///@brief time required to achieve the previous angle
+    float movement_time = 0.0f;
+};
+
+/**
  * @brief Move the NAO's head
  * @class move_head
  * @date 13.04.2018

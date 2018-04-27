@@ -21,7 +21,6 @@ void decide_action::start()
         boost::this_thread::sleep_for(boost::chrono::milliseconds(50));
       }
     }
-
 }
 
 void decide_action::do_action()
@@ -30,10 +29,15 @@ void decide_action::do_action()
 
     auto latest_state = factory_.last_state();
     if (latest_state.face_found &&
-        latest_state.angle_head != 0) {
-        move_head::move(latest_state.angle_head,
-                        latest_state.movement_time); 
-        printf("moving head? \n");
+        latest_state.head_data.angle_head != 0) {
+        move_head::move(latest_state.head_data.angle_head,
+                        latest_state.head_data.movement_time); 
+        if (!latest_state.expression.empty()) {
+            if (!age_asked_) {
+                std::string sentence = " You look " + latest_state.expression;
+                std::cout << sentence << std::endl;
+            } 
+        }
     }
     printf("ACTION_TIME: %lld \n", boost::chrono::duration_cast<boost::chrono::milliseconds>(boost::chrono::system_clock::now() - now).count());
 }

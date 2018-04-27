@@ -13,6 +13,7 @@ add_executable(face_detection main.cpp
                               src/action.cpp
                               src/event_timer.cpp
                               src/configuration.cpp
+                              src/nao_talk.cpp
               )
 
 #ALDEBARAN

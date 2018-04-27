@@ -22,11 +22,6 @@ public:
 private:
     // callable for face_detection
     noos::cloud::callable<noos::cloud::face_detection, true> query_;
-    //image
-    cv::Mat pic_;
-
-    float angle_head_ = 0.0f;
-
 };
 
 /**
@@ -38,23 +33,25 @@ class face_extras
 {
 public:
     ///@brief constructor
-    face_extras(cv::Mat picture,
-                std::function<void(std::vector<std::pair<std::string,float>>)> expression_cb,
+    face_extras(std::function<void(std::vector<std::pair<std::string,float>>)> expression_cb,
                 std::function<void(std::vector<std::pair<std::string,float>>)> age_cb);
 
-    //send vision batch object
-    void batch_send(noos::object::picture new_pic);
+    ///@brief send vision batch object
+    void batch_send(const cv::Mat & picture,
+                    const noos::object::face face);
 
-    //crop an image into an area of interest
-    noos::object::picture roi_image(const noos::object::face face);
+    ///@brief crop an image into an area of interest
+    noos::object::picture roi_image(const cv::Mat & picture,
+                                    const noos::object::face face);
 
 private:
-    using vbatch = vision_batch<tied<face_expression>,tied<age_detection>>;
+    using vbatch = noos::cloud::vision_batch<noos::cloud::tied<noos::cloud::face_expression>,
+                                             noos::cloud::tied<noos::cloud::age_detection>>;
 
     // callable for vision_batch
-    std::unique_ptr<callable<vbatch, false>> batch_;
+    std::unique_ptr<noos::cloud::callable<vbatch, false>> batch_;
     
-    noos::cloud::tied<face_expression> exp_tie_;
-    noos::cloud::tied<age_detection>   age_tie_;
+    noos::cloud::tied<noos::cloud::face_expression> exp_tie_;
+    noos::cloud::tied<noos::cloud::age_detection>   age_tie_;
 };
 #endif

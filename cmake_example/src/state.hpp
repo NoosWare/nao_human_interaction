@@ -5,6 +5,7 @@
 #include "buffer.hpp"
 #include "detect_faces.hpp"
 #include "common.hpp"
+#include "move_head.hpp"
 
 /**
  * @brief the data needed to define the state
@@ -16,17 +17,17 @@ struct state
     ///@brief face found
     bool face_found = false;
 
-    ///@brief biggest face in the image
-    float center_face_x;
-
-    ///@brief relative angle needed to centre the face
-    float angle_head = 0.0f;
-
-    ///@brief time required to achieve the previous angle
-    float movement_time = 0.0f;
+    ///@brief data for moving the head
+    head head_data;
 
     ///@brief time when the state was created
     boost::chrono::time_point<boost::chrono::system_clock> state_time;
+
+    ///@brief age detected 
+    std::string age;
+
+    ///@brief expression detected
+    std::string expression;
 
     ///@brief reset the data
     void reset();
@@ -51,8 +52,17 @@ private:
     //face_detection callback
     void face_callback(std::vector<noos::object::face> faces);
 
+    // age callback
+    void age_callback(std::vector<std::pair<std::string,float>> ages);
+
+    // face expressions callback
+    void expression_callback(std::vector<std::pair<std::string,float>> expressions);
+
     //detect faces in the image
     detect_faces detecting_faces_;
+
+    //detect extra features
+    face_extras f_extras_;
 
     //state
     state state_;

@@ -6,6 +6,11 @@
 #include "state.hpp"
 #include "event_timer.hpp"
 #include "move_head.hpp"
+#include "nao_talk.hpp"
+
+/**
+ * @brief 
+ */
 
 /**
  * @brief Choose the correct action depending of the state
@@ -34,6 +39,8 @@ private:
 
     state_factory<state, nao_state> factory_; 
     timer clock_;
+    int no_expression_;
+    bool age_asked_ = false;
 };
 
 #endif

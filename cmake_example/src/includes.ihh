@@ -4,6 +4,7 @@
 #include <alvision/alvisiondefinitions.h>
 #include <alerror/alerror.h>
 #include <alproxies/almotionproxy.h>
+#include <alproxies/altexttospeechproxy.h>
 
 // Opencv includes.
 #include <opencv2/core/core.hpp>
