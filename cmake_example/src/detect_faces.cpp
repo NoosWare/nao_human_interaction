@@ -1,16 +1,25 @@
 #include "detect_faces.hpp"
+#include <exception>
 
 detect_faces::detect_faces(std::function<void(std::vector<noos::object::face>)> cb)
-: query_(cb,
-         noos_platform::noos)
+: face_cb(cb) 
 {}
 
 void detect_faces::send(const cv::Mat & pic)
 {
     //openCV is required because the raw data doesn't have png or jpg format,
     //required for the noos platform
-    query_.object = noos::cloud::face_detection(mat_to_pic()(pic));
-    query_.send(5);
+    //if (!query_) {
+        query_ = std::make_unique<noos::cloud::callable<noos::cloud::face_detection,
+                                                        false>>(face_cb,
+                                                                noos_platform::noos,
+                                                                mat_to_pic()(pic));
+    //}
+    //else {
+    //    query_->object = noos::cloud::face_detection(mat_to_pic()(pic));
+    //}
+    if (query_)
+        query_->send();
 }
 
 face_extras::face_extras(std::function<void(std::vector<std::pair<std::string,float>>)> expression_cb,
@@ -23,17 +32,18 @@ void face_extras::batch_send(const cv::Mat & picture,
                              const noos::object::face face)
 {
     auto new_pic = roi_image(picture, face);
-    if (!batch_) {
+    //if (!batch_) {
         batch_ = std::make_unique<noos::cloud::callable<vbatch,false>>(new_pic, 
                                                                        noos_platform::noos, 
                                                                        exp_tie_,
                                                                        age_tie_); 
-    } 
-    else {
-        batch_->object = vbatch(new_pic, exp_tie_, age_tie_);
+    //} 
+    //else {
+    //    batch_->object = vbatch(new_pic, exp_tie_, age_tie_);
+    //}
+    if (batch_) {
+        batch_->send();
     }
-    assert(batch_);
-    batch_->send(5);
 }
 
 noos::object::picture face_extras::roi_image(const cv::Mat & picture,

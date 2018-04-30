@@ -21,7 +21,8 @@ public:
 
 private:
     // callable for face_detection
-    noos::cloud::callable<noos::cloud::face_detection, true> query_;
+    std::unique_ptr<noos::cloud::callable<noos::cloud::face_detection, false>> query_;
+    std::function<void(std::vector<noos::object::face>)> face_cb;
 };
 
 /**

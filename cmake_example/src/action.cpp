@@ -33,10 +33,11 @@ void decide_action::do_action()
         move_head::move(latest_state.head_data.angle_head,
                         latest_state.head_data.movement_time); 
         if (!latest_state.expression.empty()) {
-            if (!age_asked_) {
-                std::string sentence = " You look " + latest_state.expression;
-                std::cout << sentence << std::endl;
-            } 
+            if (game::play(latest_state)) {
+                clock_.stop();
+                move_head::stop();
+                printf("end of the game");
+            }
         }
     }
     printf("ACTION_TIME: %lld \n", boost::chrono::duration_cast<boost::chrono::milliseconds>(boost::chrono::system_clock::now() - now).count());

@@ -11,8 +11,8 @@ void state::reset()
 
 nao_state::nao_state()
 : detecting_faces_(std::bind(&nao_state::face_callback, this, std::placeholders::_1)),
-  f_extras_(std::bind(&nao_state::age_callback, this, std::placeholders::_1),
-            std::bind(&nao_state::expression_callback, this, std::placeholders::_1))
+  f_extras_(std::bind(&nao_state::expression_callback, this, std::placeholders::_1),
+            std::bind(&nao_state::age_callback, this, std::placeholders::_1))
 {}
 
 state nao_state::new_state()
@@ -40,7 +40,8 @@ void nao_state::face_callback(std::vector<noos::object::face> faces)
                         state_.head_data.angle_head,
                         state_.head_data.movement_time);
         state_.face_found = true;
-        if (max_size > 100) {
+        printf("size of face: %d \n",max_size); 
+        if (max_size > 90) {
             f_extras_.batch_send(image_, faces.at(i));  
         }
     }
@@ -59,13 +60,14 @@ void nao_state::age_callback(std::vector<std::pair<std::string,float>> ages)
                pos = i;
             }
         }
-        if (max_prob > 60)
+        if (max_prob > 0.60)
             state_.age = ages[pos].first;
     }
 }
 
 void nao_state::expression_callback(std::vector<std::pair<std::string,float>> expressions)
 {
+    printf("EXPRESSION_CALLBACK!!!!!!!!!!!!!!!!!!!!!!!!!");
     if (expressions.size() != 0) {
         float max_prob = 0;
         int pos = 0;
@@ -75,7 +77,8 @@ void nao_state::expression_callback(std::vector<std::pair<std::string,float>> ex
                pos = i;
             }
         }
-        if (max_prob > 60)
+        if (max_prob > 0.6)
             state_.expression = expressions[pos].first;
+        printf(" : %s  %.2f \n", expressions[pos].first.c_str(), expressions[pos].second);
     }
 }

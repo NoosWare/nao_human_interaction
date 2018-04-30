@@ -6,7 +6,7 @@
 #include "state.hpp"
 #include "event_timer.hpp"
 #include "move_head.hpp"
-#include "nao_talk.hpp"
+#include "game.hpp"
 
 /**
  * @brief 
@@ -18,7 +18,8 @@
  * @date 18.04.2018
  */
 class decide_action
-: public move_head
+: public move_head,
+  public game
 {
 public:
     ///@brief constructor
@@ -39,8 +40,6 @@ private:
 
     state_factory<state, nao_state> factory_; 
     timer clock_;
-    int no_expression_;
-    bool age_asked_ = false;
 };
 
 #endif
