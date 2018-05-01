@@ -17,6 +17,9 @@ struct state
     ///@brief face found
     bool face_found = false;
 
+    ///@brief face found is close to the robot
+    bool close_face = false;
+
     ///@brief data for moving the head
     head head_data;
 

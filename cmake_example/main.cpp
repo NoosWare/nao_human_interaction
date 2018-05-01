@@ -5,6 +5,7 @@
 #include "src/state_factory.hpp"
 #include "src/action.hpp"
 #include "src/configuration.hpp"
+#include "src/nao_walk.hpp"
 /*
  * \brief Example of detecting faces with NAO camera
  */
@@ -48,6 +49,8 @@ int main(int argc, char* argv[])
         float angle_zero = 0.0f;
         head.move(angle_zero, 2.0f);
         head.stop();
+        nao_walk walk;
+        walk.stop_posture();
     }
 
     return 0;

@@ -37,6 +37,7 @@ void decide_action::do_action()
                 clock_.stop();
                 move_head::stop();
                 printf("end of the game");
+                return;
             }
         }
     }
@@ -47,4 +48,5 @@ decide_action::~decide_action()
 {
     clock_.stop();
     move_head::stop();
+    nao_walk::stop_posture();
 }

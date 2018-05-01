@@ -24,9 +24,13 @@ private:
     //check age said with expression feedback
     bool check_age();
 
+    //for change a bit what NAO says
+    void say_dif(std::string expression);
+
     state latest_;
     bool age_asked_ = false;
     std::string previous_age;
+    int counter_ = 0;
 
 };
 

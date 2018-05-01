@@ -7,10 +7,7 @@
 #include "event_timer.hpp"
 #include "move_head.hpp"
 #include "game.hpp"
-
-/**
- * @brief 
- */
+#include "nao_walk.hpp"
 
 /**
  * @brief Choose the correct action depending of the state
@@ -19,7 +16,8 @@
  */
 class decide_action
 : public move_head,
-  public game
+  public game,
+  public nao_walk
 {
 public:
     ///@brief constructor

@@ -15,6 +15,7 @@ add_executable(face_detection main.cpp
                               src/configuration.cpp
                               src/nao_talk.cpp
                               src/game.cpp
+                              src/nao_walk.cpp
               )
 
 #ALDEBARAN
