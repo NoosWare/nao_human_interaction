@@ -6,21 +6,7 @@
 #include "src/action.hpp"
 #include "src/configuration.hpp"
 #include "src/nao_walk.hpp"
-/*
- * \brief Example of detecting faces with NAO camera
- */
-
-
-void test1()
-{
-    printf("action1 \n");
-}
-
-void test2()
-{
-    boost::this_thread::sleep_for(boost::chrono::milliseconds(80));
-    printf("action 2 \n");
-}
+#include "src/nao_broker.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -37,6 +23,7 @@ int main(int argc, char* argv[])
     parameters.set_noos("test", "test_token");
 
     decide_action actions;
+    nao_broker broker_nao;
     
     std::stringstream ss(argv[2]);
     bool reset;
@@ -52,6 +39,5 @@ int main(int argc, char* argv[])
         nao_walk walk;
         walk.stop_posture();
     }
-
-    return 0;
+  return 0;
 }

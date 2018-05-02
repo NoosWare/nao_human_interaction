@@ -31,8 +31,9 @@ void game::say_age()
 bool game::check_age()
 {
     //TODO: change the range of expressions --> not detecting happiness too easily :(
-    if (latest_.expression.compare("happy") == 0 ||
-        latest_.expression.compare("neutral") == 0) {
+    if (//latest_.expression.compare("happy") == 0 ||
+        //latest_.expression.compare("neutral") == 0 ||
+        latest_.face_found) {
         nao_talk::talk("Huuuuurraaaaayyyyy!");
         return true;
     }
@@ -54,16 +55,20 @@ void game::say_dif(std::string expression)
             sentence = "You look " + expression;
             counter_++;
             break;
-        case 1:
+        case 3:
             sentence = "Why do you feel " + expression + "?";
             sentence += " Is it my fault?";
             counter_++;
             break;
-        case 2:
+        case 7:
             sentence = "Come on! Smile!";
             counter_++;
             break; 
-        case 20:
+        case 12:
+            sentence = "You would look better if you smile to me. pleaseeee";
+            counter_++;
+            break;
+        case 15:
             counter_ = 0;
             break;
         default:
@@ -71,6 +76,6 @@ void game::say_dif(std::string expression)
             break;
     } 
     printf("\n %d \n", counter_);
-    //if (counter_ <= 2) 
+    //if (!sentence.empty()) 
         //nao_talk::talk(sentence);
 }

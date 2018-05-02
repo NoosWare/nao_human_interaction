@@ -16,6 +16,8 @@ add_executable(face_detection main.cpp
                               src/nao_talk.cpp
                               src/game.cpp
                               src/nao_walk.cpp
+                              src/event.cpp
+                              src/nao_broker.cpp
               )
 
 #ALDEBARAN
@@ -34,6 +36,9 @@ message(STATUS ${ALCOMMON_LIBRARY})
 
 find_library(ALVALUE_LIBRARY NAMES alvalue HINTS ${LIB_PATH})
 message(STATUS ${ALVALUE_LIBRARY})
+
+find_library(ALTHREAD_LIBRARY NAMES althread HINTS ${LIB_PATH})
+message(STATUS ${ALTHREAD_LIBRARY})
 
 find_library(QI_LIBRARY NAMES qi HINTS ${LIB_PATH})
 message(STATUS ${QI_LIBRARY})
@@ -68,6 +73,7 @@ set(NAO_LIBRARIES ${ALPROXIES_LIBRARY}
                   ${ALCOMMON_LIBRARY}
                   ${ALERROR_LIBRARY}
                   ${ALVALUE_LIBRARY}
+                  ${ALTHREAD_LIBRARY}
                   ${QI_LIBRARY}
                   ${QITYPE_LIBRARY}
                   ${OPENCV_CORE_LIBRARY}
