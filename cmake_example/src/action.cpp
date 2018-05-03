@@ -7,6 +7,11 @@ decide_action::decide_action()
   clock_(io1_, boost::bind(&decide_action::do_action, this), 200)
 {}
 
+decide_action::~decide_action()
+{
+    stop();
+}
+
 void decide_action::start()
 {
     while (!io1_.stopped()) //&& !io2_.stopped())
@@ -32,11 +37,10 @@ void decide_action::do_action()
         latest_state.head_data.angle_head != 0) {
         move_head::move(latest_state.head_data.angle_head,
                         latest_state.head_data.movement_time); 
-        if (!latest_state.expression.empty()) {
+        if (!check_walk(latest_state)) {
             if (game::play(latest_state)) {
-                clock_.stop();
-                move_head::stop();
                 printf("end of the game");
+                stop();
                 return;
             }
         }
@@ -44,9 +48,23 @@ void decide_action::do_action()
     printf("ACTION_TIME: %lld \n", boost::chrono::duration_cast<boost::chrono::milliseconds>(boost::chrono::system_clock::now() - now).count());
 }
 
-decide_action::~decide_action()
+void decide_action::stop()
 {
+    io1_.stop();
     clock_.stop();
     move_head::stop();
     nao_walk::stop_posture();
+}
+
+bool decide_action::check_walk(state lstate)
+{
+    float zero = 0.0f;
+    if (!lstate.close_face) {
+        printf("WAAAAALK \n");
+        nao_walk::walk(distance_, zero, lstate.head_data.angle_head);
+        move_head::move(zero, lstate.head_data.movement_time);
+        return true;
+    }
+    printf("NO_WALK");
+    return false;
 }

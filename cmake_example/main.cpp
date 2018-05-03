@@ -8,6 +8,8 @@
 #include "src/nao_walk.hpp"
 #include "src/nao_broker.hpp"
 
+#define BOOST_SIGNALS_NO_DEPRECATION_WARNING
+
 int main(int argc, char* argv[])
 {
     if (argc < 3)

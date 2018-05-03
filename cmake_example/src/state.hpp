@@ -32,6 +32,9 @@ struct state
     ///@brief expression detected
     std::string expression;
 
+    ///@brief tactile sensor of the head touched
+    bool head_touched = false;
+
     ///@brief reset the data
     void reset();
 };
@@ -50,7 +53,7 @@ public:
 
     ///@brief create a new state
     state new_state();
-    
+ 
 private:
     //face_detection callback
     void face_callback(std::vector<noos::object::face> faces);

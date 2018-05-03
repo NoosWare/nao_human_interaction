@@ -5,7 +5,7 @@ nao_walk::nao_walk()
 : motion_(robot_ip::ip),
   robotPosture_(robot_ip::ip)
 {
-    robotPosture_.goToPosture("Crouch", 0.5f);
+    robotPosture_.goToPosture("Stand", 0.5f);
 }
 
 void nao_walk::walk(float x,
@@ -13,7 +13,7 @@ void nao_walk::walk(float x,
                     float theta)
 {
     motion_.moveTo(x, y, theta);
-    motion_.waitUntilMoveIsFinished();
+    //motion_.waitUntilMoveIsFinished();
 }
 
 bool nao_walk::has_finished()
@@ -23,5 +23,6 @@ bool nao_walk::has_finished()
 
 void nao_walk::stop_posture()
 {
+    robotPosture_.goToPosture("SitRelax", 0.5f);
     robotPosture_.stopMove();
 }

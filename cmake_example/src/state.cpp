@@ -1,4 +1,5 @@
 #include "state.hpp"
+#include "event.hpp"
 
 void state::reset()
 {
@@ -8,6 +9,7 @@ void state::reset()
     state_time = boost::chrono::system_clock::now();
     age.clear();
     expression.clear(); 
+    head_touched = false;
 }
 
 nao_state::nao_state()
@@ -27,12 +29,14 @@ state nao_state::new_state()
     if (!image_.empty()) {
         detecting_faces_.send(image_);
     }
+    tactile_sensor touched_sensor;
+    state_.head_touched = touched_sensor.touched; 
+    printf("sensor touched: %x \n", state_.head_touched);
     return state_;
 }
 
 void nao_state::face_callback(std::vector<noos::object::face> faces)
 {
-    std::cout << "Found: " << faces.size() << " faces" << std::endl; 
     if (faces.size() != 0) { 
         int i = 0;
         int max_size = 0;
@@ -42,10 +46,10 @@ void nao_state::face_callback(std::vector<noos::object::face> faces)
                         state_.head_data.movement_time);
         state_.face_found = true;
         printf("size of face: %d \n",max_size); 
-        //if (max_size > 90) {
-            //state_.close_face = true;
+        if (max_size > 90) {
+            state_.close_face = true;
             f_extras_.batch_send(image_, faces.at(i));  
-        //}
+        }
     }
     state_.state_time = boost::chrono::system_clock::now();
 }

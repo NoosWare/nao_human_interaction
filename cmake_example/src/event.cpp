@@ -7,8 +7,15 @@
 #include <qi/log.hpp>
 #include <althread/alcriticalsection.h>
 
+bool tactile_sensor::touched = false;
+
+void tactile_sensor::set_value(bool value)
+{
+    touched = value;
+}
+
 event::event(boost::shared_ptr<AL::ALBroker> broker,
-                   const std::string& name)
+             const std::string& name)
 : AL::ALModule(broker, name),
   fCallbackMutex(AL::ALMutex::createALMutex())
 {
@@ -30,7 +37,7 @@ event::event(boost::shared_ptr<AL::ALBroker> broker,
 
 event::~event()
 {
-    fMemoryProxy.unsubscribeToEvent("printHello", "event");
+    fMemoryProxy.unsubscribeToEvent("tactile_sensor", "event");
 }
 
 void event::init()
@@ -54,14 +61,13 @@ void event::init()
 
 void event::tactile_sensor()
 {
-    std::cout << "Hello!" << std::endl;
     AL::ALCriticalSection section(fCallbackMutex);
 
     /**
-    * Check that the bumper is pressed.
+    * Check that the sensor is pressed.
     */
     fState =  fMemoryProxy.getData("MiddleTactilTouched");
-    if (fState  > 0.5f) {
-        return;
+    if (fState > 0.5) { 
+        tactile_sensor::set_value(true);
     }
 }

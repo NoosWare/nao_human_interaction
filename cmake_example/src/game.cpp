@@ -3,10 +3,12 @@
 bool game::play(state latest)
 {
     latest_ = latest;
-    if (!age_asked_) {
+    if (!age_asked_ && 
+        !latest_.age.empty()) {
         if (latest_.expression.compare("happy") == 0 ||
             latest_.expression.compare("neutral") == 0) {
             nao_talk::talk("Let me guess your age.");
+            printf("AGE ASKED ------------------------------------------------\n");
             age_asked_ = true;
             say_age();
             counter_ = 0;
@@ -24,24 +26,31 @@ bool game::play(state latest)
 void game::say_age()
 {
     std::string age = "Your age range is " + latest_.age + ". Is it ok?";
-    //nao_talk::talk(age); 
+    nao_talk::talk(age); 
     previous_age = latest_.age;
 }
 
 bool game::check_age()
 {
     //TODO: change the range of expressions --> not detecting happiness too easily :(
-    if (//latest_.expression.compare("happy") == 0 ||
-        //latest_.expression.compare("neutral") == 0 ||
-        latest_.face_found) {
-        nao_talk::talk("Huuuuurraaaaayyyyy!");
+    if (latest_.expression.compare("happy") == 0 ||
+        latest_.expression.compare("neutral") == 0 ||
+        latest_.head_touched) {
+        nao_talk::talk("Hurray! I win!");
         return true;
     }
     else if (!latest_.age.empty() &&
              latest_.age.compare(previous_age) != 0) {
         std::string correction = "wasn't it correct? Ok... So is your age " + latest_.age + "?";
-        //nao_talk::talk(correction);
+        nao_talk::talk(correction);
         previous_age = latest_.age;
+        printf("Age %s \n \n", previous_age.c_str());
+    }
+    else if (!latest_.age.empty() &&
+             latest_.age.compare(previous_age) == 0) {
+        std::string no_new_range= "Let me thing a bit more...";
+        nao_talk::talk(no_new_range);
+        //TODO if the same age is detected more than 3 times, the user win
     }
     //TODO: add more cases
     return false;
@@ -76,6 +85,6 @@ void game::say_dif(std::string expression)
             break;
     } 
     printf("\n %d \n", counter_);
-    //if (!sentence.empty()) 
-        //nao_talk::talk(sentence);
+    if (!sentence.empty()) 
+        nao_talk::talk(sentence);
 }
