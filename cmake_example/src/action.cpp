@@ -60,11 +60,9 @@ bool decide_action::check_walk(state lstate)
 {
     float zero = 0.0f;
     if (!lstate.close_face) {
-        printf("WAAAAALK \n");
         nao_walk::walk(distance_, zero, lstate.head_data.angle_head);
         move_head::move(zero, lstate.head_data.movement_time);
         return true;
     }
-    printf("NO_WALK");
     return false;
 }

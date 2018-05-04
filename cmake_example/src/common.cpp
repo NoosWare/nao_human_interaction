@@ -65,12 +65,12 @@ void face_location::operator()(float middle,
     angle += ((middle * 1.06 / 320) - 0.53) * (-1);
 }
 
-void bigger_face::operator()(const std::vector<noos::object::face> faces,
+void bigger_face::operator()(const std::vector<noos::object::person> faces,
                              int & position,
                              int & max_size)
 {
     for(int j = 0; j < faces.size(); j++) {
-        auto size = faces.at(j).bottom_right_x - faces.at(j).top_left_x;
+        auto size = faces.at(j).face_rect.bottom_right_x - faces.at(j).face_rect.top_left_x;
         if (size > max_size) {
             max_size = size;
             position = j;

@@ -35,20 +35,19 @@ state nao_state::new_state()
     return state_;
 }
 
-void nao_state::face_callback(std::vector<noos::object::face> faces)
+void nao_state::face_callback(std::vector<noos::object::person> faces)
 {
     if (faces.size() != 0) { 
         int i = 0;
         int max_size = 0;
         bigger_face()(faces, i, max_size);
-        face_location()(faces.at(i).top_left_x + max_size/2,
+        face_location()(faces.at(i).face_rect.top_left_x + max_size/2,
                         state_.head_data.angle_head,
                         state_.head_data.movement_time);
         state_.face_found = true;
-        printf("size of face: %d \n",max_size); 
-        if (max_size > 90) {
+        if (max_size > 70) {
             state_.close_face = true;
-            f_extras_.batch_send(image_, faces.at(i));  
+            f_extras_.batch_send(image_, faces.at(i).face_rect);  
         }
     }
     state_.state_time = boost::chrono::system_clock::now();

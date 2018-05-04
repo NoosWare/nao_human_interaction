@@ -1,7 +1,6 @@
 #include "detect_faces.hpp"
-#include <exception>
 
-detect_faces::detect_faces(std::function<void(std::vector<noos::object::face>)> cb)
+detect_faces::detect_faces(std::function<void(std::vector<noos::object::person>)> cb)
 : face_cb(cb) 
 {}
 
@@ -10,13 +9,13 @@ void detect_faces::send(const cv::Mat & pic)
     //openCV is required because the raw data doesn't have png or jpg format,
     //required for the noos platform
     //if (!query_) {
-        query_ = std::make_unique<noos::cloud::callable<noos::cloud::face_detection,
+        query_ = std::make_unique<noos::cloud::callable<noos::cloud::face_recognition,
                                                         false>>(face_cb,
                                                                 noos_platform::noos,
                                                                 mat_to_pic()(pic));
     //}
     //else {
-    //    query_->object = noos::cloud::face_detection(mat_to_pic()(pic));
+    //    query_->object = noos::cloud::face_recognition(mat_to_pic()(pic));
     //}
     if (query_)
         query_->send();

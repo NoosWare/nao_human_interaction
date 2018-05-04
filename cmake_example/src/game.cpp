@@ -7,8 +7,10 @@ bool game::play(state latest)
         !latest_.age.empty()) {
         if (latest_.expression.compare("happy") == 0 ||
             latest_.expression.compare("neutral") == 0) {
-            nao_talk::talk("Let me guess your age.");
-            printf("AGE ASKED ------------------------------------------------\n");
+            std::string age = nao_talk::animation["yes"] +
+                              "Let me guess your age." +
+                              nao_talk::animation["s_yes"];
+            nao_talk::talk(age);
             age_asked_ = true;
             say_age();
             counter_ = 0;
@@ -25,7 +27,9 @@ bool game::play(state latest)
 
 void game::say_age()
 {
-    std::string age = "Your age range is " + latest_.age + ". Is it ok?";
+    std::string age = nao_talk::animation["doubt"] +
+                      "Your age range is " + latest_.age + ". Is it ok?" +
+                      nao_talk::animation["s_doubt"];
     nao_talk::talk(age); 
     previous_age = latest_.age;
 }
@@ -36,19 +40,25 @@ bool game::check_age()
     if (latest_.expression.compare("happy") == 0 ||
         latest_.expression.compare("neutral") == 0 ||
         latest_.head_touched) {
-        nao_talk::talk("Hurray! I win!");
+        nao_talk::talk(nao_talk::animation["happy"] +
+                       "Hurray! I win!" + 
+                       nao_talk::animation["s_happy"]);
         return true;
     }
     else if (!latest_.age.empty() &&
              latest_.age.compare(previous_age) != 0) {
-        std::string correction = "wasn't it correct? Ok... So is your age " + latest_.age + "?";
+        std::string correction = nao_talk::animation["doubt"] +
+                                 "wasn't it correct? Ok... So is your age " + latest_.age + "?" +
+                                 nao_talk::animation["s_doubt"];
+
         nao_talk::talk(correction);
         previous_age = latest_.age;
-        printf("Age %s \n \n", previous_age.c_str());
     }
     else if (!latest_.age.empty() &&
              latest_.age.compare(previous_age) == 0) {
-        std::string no_new_range= "Let me thing a bit more...";
+        std::string no_new_range = nao_talk::animation["doubt"] +
+                                   "Let me thing a bit more..." +
+                                   nao_talk::animation["s_doubt"];
         nao_talk::talk(no_new_range);
         //TODO if the same age is detected more than 3 times, the user win
     }
@@ -61,20 +71,28 @@ void game::say_dif(std::string expression)
     std::string sentence;
     switch(counter_) {
         case 0: 
-            sentence = "You look " + expression;
+            sentence = nao_talk::animation["me"] +
+                       "You look " + expression +
+                       nao_talk::animation["s_me"];
             counter_++;
             break;
         case 3:
-            sentence = "Why do you feel " + expression + "?";
-            sentence += " Is it my fault?";
+            sentence = "Why do you feel " + expression + "?" +
+                       nao_talk::animation["me"] +
+                       " Is it my fault?" +
+                       nao_talk::animation["s_me"];
             counter_++;
             break;
         case 7:
-            sentence = "Come on! Smile!";
+            sentence = nao_talk::animation["beg"] +
+                       "Come on. Smile!" +
+                       nao_talk::animation["s_beg"];
             counter_++;
             break; 
         case 12:
-            sentence = "You would look better if you smile to me. pleaseeee";
+            sentence = nao_talk::animation["beg"] +
+                       "You would look better if you smile to me. please" +
+                       nao_talk::animation["s_beg"];
             counter_++;
             break;
         case 15:
@@ -84,7 +102,6 @@ void game::say_dif(std::string expression)
             counter_++;
             break;
     } 
-    printf("\n %d \n", counter_);
     if (!sentence.empty()) 
         nao_talk::talk(sentence);
 }

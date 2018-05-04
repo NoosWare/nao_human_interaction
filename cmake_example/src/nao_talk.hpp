@@ -18,8 +18,11 @@ public:
     ///@brief nao repeats the string passed
     bool talk(std::string sentence);
 
+    ///@brief animations map
+    static std::map<std::string, std::string> animation;
+
 private:
-    AL::ALTextToSpeechProxy tts_;
+    AL::ALAnimatedSpeechProxy tts_;
 };
 
 #endif

@@ -14,15 +14,15 @@ class detect_faces
 {
 public:
     ///@brief constructor adding callback
-    detect_faces(std::function<void(std::vector<noos::object::face>)> cb);
+    detect_faces(std::function<void(std::vector<noos::object::person>)> cb);
 
     ///@brief send the image to the cloud
     void send(const cv::Mat & pic);
 
 private:
     // callable for face_detection
-    std::unique_ptr<noos::cloud::callable<noos::cloud::face_detection, false>> query_;
-    std::function<void(std::vector<noos::object::face>)> face_cb;
+    std::unique_ptr<noos::cloud::callable<noos::cloud::face_recognition, false>> query_;
+    std::function<void(std::vector<noos::object::person>)> face_cb;
 };
 
 /**

@@ -45,7 +45,7 @@ struct face_location
  */
 struct bigger_face
 {
-    void operator()(const std::vector<noos::object::face> faces,
+    void operator()(const std::vector<noos::object::person> faces,
                     int & position,
                     int & max_size);
 };

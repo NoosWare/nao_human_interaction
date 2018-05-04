@@ -56,7 +56,7 @@ public:
  
 private:
     //face_detection callback
-    void face_callback(std::vector<noos::object::face> faces);
+    void face_callback(std::vector<noos::object::person> faces);
 
     // age callback
     void age_callback(std::vector<std::pair<std::string,float>> ages);

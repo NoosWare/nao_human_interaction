@@ -11,7 +11,7 @@
 #include <alcommon/almodule.h>
 #include <alcommon/albroker.h>
 #include <alcommon/albrokermanager.h>
-
+#include <alproxies/alanimatedspeechproxy.h>
 
 // Opencv includes.
 #include <opencv2/core/core.hpp>

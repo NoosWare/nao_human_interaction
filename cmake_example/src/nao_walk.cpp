@@ -5,7 +5,7 @@ nao_walk::nao_walk()
 : motion_(robot_ip::ip),
   robotPosture_(robot_ip::ip)
 {
-    robotPosture_.goToPosture("Stand", 0.5f);
+    robotPosture_.goToPosture("StandInit", 0.5f);
 }
 
 void nao_walk::walk(float x,
@@ -25,4 +25,5 @@ void nao_walk::stop_posture()
 {
     robotPosture_.goToPosture("SitRelax", 0.5f);
     robotPosture_.stopMove();
+    motion_.rest();
 }
