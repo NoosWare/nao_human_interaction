@@ -23,18 +23,6 @@ nao_broker::nao_broker()
         AL::ALBrokerManager::kill();
         throw std::runtime_error("Impossible to connect to NAO with ip: " + robot_ip::ip); 
     }
-    start();
-}
-
-void nao_broker::start()
-{
-    // Deal with ALBrokerManager singleton (add your borker into NAOqi)
-    AL::ALBrokerManager::setInstance(broker_->fBrokerManager.lock());
-    AL::ALBrokerManager::getInstance()->addBroker(broker_);
-
-    // Now it's time to load your module with
-    // AL::ALModule::createModule<your_module>(<broker_create>, <your_module>);
-    AL::ALModule::createModule<event>(broker_, "event");
 }
 
 boost::shared_ptr<AL::ALBroker> nao_broker::get_broker()

@@ -16,8 +16,8 @@
  */
 class decide_action
 : public move_head,
-  public game,
-  public nao_walk
+  public game/*,
+  public nao_walk*/
 {
 public:
     ///@brief constructor

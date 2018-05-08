@@ -1,29 +1,42 @@
 #include "state.hpp"
 #include "event.hpp"
 
-void state::reset()
+void face_data::reset()
 {
     face_found = false;
     close_face = false;
-    head_data.movement_time = 0.0f;
-    state_time = boost::chrono::system_clock::now();
+    label.clear();
     age.clear();
     expression.clear(); 
+    name.clear();
+
+}
+void state::reset()
+{
+    head_data.movement_time = 0.0f;
+    state_time = boost::chrono::system_clock::now();
     head_touched = false;
+    face.reset();
 }
 
 nao_state::nao_state()
 : detecting_faces_(std::bind(&nao_state::face_callback, this, std::placeholders::_1)),
   f_extras_(std::bind(&nao_state::expression_callback, this, std::placeholders::_1),
-            std::bind(&nao_state::age_callback, this, std::placeholders::_1))
-{}
+            std::bind(&nao_state::age_callback, this, std::placeholders::_1)),
+  im_module_(nao_broker::get_broker(), "optimized_image")
+{
+    im_module_.init();
+    //nao_broker::start<optimized_image>("optimized_image");
+}
 
 state nao_state::new_state()
 {
     state_.reset();
     auto now = boost::chrono::system_clock::now();
     
-    get_image()(robot_ip::ip, image_);
+    //get_image()(robot_ip::ip, image_);
+    im_module_.optimizedImageProcessing();
+    //image_ = im_module_.get_image();
 
     printf("get_image: %lld \n", boost::chrono::duration_cast<boost::chrono::milliseconds>(boost::chrono::system_clock::now() - now).count());
     if (!image_.empty()) {
@@ -44,9 +57,11 @@ void nao_state::face_callback(std::vector<noos::object::person> faces)
         face_location()(faces.at(i).face_rect.top_left_x + max_size/2,
                         state_.head_data.angle_head,
                         state_.head_data.movement_time);
-        state_.face_found = true;
+        state_.face.face_found = true;
+        state_.face.label = faces.at(i).label;
+        state_.face.name = faces.at(i).name;
         if (max_size > 70) {
-            state_.close_face = true;
+            state_.face.close_face = true;
             f_extras_.batch_send(image_, faces.at(i).face_rect);  
         }
     }
@@ -64,7 +79,7 @@ void nao_state::age_callback(std::vector<std::pair<std::string,float>> ages)
                pos = i;
             }
         }
-        state_.age = ages[pos].first;
+        state_.face.age = ages[pos].first;
     }
 }
 
@@ -79,7 +94,7 @@ void nao_state::expression_callback(std::vector<std::pair<std::string,float>> ex
                pos = i;
             }
         }
-        state_.expression = expressions[pos].first;
+        state_.face.expression = expressions[pos].first;
         printf("EMOTIONNNNNNNNNNNNNNNNNNNNNNN : %s  %.2f \n", expressions[pos].first.c_str(), expressions[pos].second);
     }
 }

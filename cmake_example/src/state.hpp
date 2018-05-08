@@ -6,6 +6,37 @@
 #include "detect_faces.hpp"
 #include "common.hpp"
 #include "move_head.hpp"
+#include "optimized_image.hpp"
+#include "nao_broker.hpp"
+
+/**
+ * @brief data related with the face detected
+ * @struct face_data
+ * @date 8.05.2018
+ */
+struct face_data
+{
+    ///@brief face found
+    bool face_found = false;
+
+    ///@brief label of the face
+    std::string label;
+
+    ///@brief name of the face
+    std::string name;
+
+    ///@brief face found is close to the robot
+    bool close_face = false;
+    
+    ///@brief age detected 
+    std::string age;
+
+    ///@brief expression detected
+    std::string expression;
+
+    ///@brief reset 
+    void reset();
+};
 
 /**
  * @brief the data needed to define the state
@@ -14,23 +45,14 @@
  */
 struct state
 {
-    ///@brief face found
-    bool face_found = false;
-
-    ///@brief face found is close to the robot
-    bool close_face = false;
+    ///@brief data of the face detected
+    face_data face;
 
     ///@brief data for moving the head
     head head_data;
 
     ///@brief time when the state was created
     boost::chrono::time_point<boost::chrono::system_clock> state_time;
-
-    ///@brief age detected 
-    std::string age;
-
-    ///@brief expression detected
-    std::string expression;
 
     ///@brief tactile sensor of the head touched
     bool head_touched = false;
@@ -46,6 +68,7 @@ struct state
  * @date 17.04.2018
  */
 class nao_state
+: public nao_broker 
 {
 public:
     ///@brief constructor
@@ -75,6 +98,9 @@ private:
 
     //image
     cv::Mat image_;
+
+    //image_module
+    optimized_image im_module_;
 
 };
 #endif

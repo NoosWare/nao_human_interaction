@@ -15,9 +15,12 @@ class game
 : public nao_talk
 {
 public:
-    bool play(state latest);
+    bool play(const state & latest);
 
 private:
+    //start game
+    bool start();
+
     //guess age
     void say_age();
 
@@ -27,10 +30,15 @@ private:
     //for change a bit what NAO says
     void say_dif(std::string expression);
 
+    //check who is playing the game
+    bool check_person();
+
     state latest_;
     bool age_asked_ = false;
     std::string previous_age;
     int counter_ = 0;
+    std::string previous_label_;
+    int counter_change_person_ = 0;
 
 };
 

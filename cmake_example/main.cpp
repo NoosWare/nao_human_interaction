@@ -7,6 +7,8 @@
 #include "src/configuration.hpp"
 #include "src/nao_walk.hpp"
 #include "src/nao_broker.hpp"
+#include "src/event.hpp"
+#include "src/optimized_image.hpp"
 
 #define BOOST_SIGNALS_NO_DEPRECATION_WARNING
 
@@ -27,6 +29,8 @@ int main(int argc, char* argv[])
     decide_action actions;
     nao_broker broker_nao;
     
+    broker_nao.start<event>("event");
+    broker_nao.start<optimized_image>("oi");
     std::stringstream ss(argv[2]);
     bool reset;
     ss >> std::boolalpha >> reset;

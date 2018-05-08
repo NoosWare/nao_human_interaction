@@ -68,6 +68,6 @@ void event::tactile_sensor()
     */
     fState =  fMemoryProxy.getData("MiddleTactilTouched");
     if (fState > 0.5) { 
-        tactile_sensor::set_value(true);
+        tactile_sensor::set_value(!tactile_sensor::touched);
     }
 }
