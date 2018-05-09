@@ -6,7 +6,6 @@
 #include "detect_faces.hpp"
 #include "common.hpp"
 #include "move_head.hpp"
-#include "optimized_image.hpp"
 #include "nao_broker.hpp"
 
 /**
@@ -98,9 +97,6 @@ private:
 
     //image
     cv::Mat image_;
-
-    //image_module
-    optimized_image im_module_;
 
 };
 #endif

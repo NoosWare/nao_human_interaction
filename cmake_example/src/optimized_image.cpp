@@ -22,6 +22,8 @@ void optimized_image::init()
 
 void optimized_image::optimizedImageProcessing() 
 {
+
+    auto now = boost::chrono::system_clock::now();
     /** Retrieve a pointer to the image. */
     fImagePointer_ = (AL::ALImage*) fVideoProxy_.getImageLocal(fGVMId_);
 
@@ -33,9 +35,10 @@ void optimized_image::optimizedImageProcessing()
     imgHeader.data = fImagePointer_->getData();
     imgHeader.copyTo(image_);
 
-
     /** Do not forget to release the image. */
     fVideoProxy_.releaseImage(fGVMId_);
+
+    printf("get_image: %lld \n", boost::chrono::duration_cast<boost::chrono::milliseconds>(boost::chrono::system_clock::now() - now).count());
 }
 
 cv::Mat optimized_image::get_image()

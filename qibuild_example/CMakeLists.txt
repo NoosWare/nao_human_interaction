@@ -1,12 +1,24 @@
 cmake_minimum_required(VERSION 2.8)
-project(nao_vision_example)
 
+# Give a name to the project.
+project(image_module)
+
+# You need this to find the qiBuild CMake framework
 find_package(qibuild)
 
-find_package(noos)
-message(STATUS "libraries: ${NOOS_LIBRARIES}")
-message(STATUS "headers: ${NOOS_INCLUDE_DIRS}")
+# Create a list of source files
+set(_srcs
+    optimizedimage.cpp
+    optimizedimage.hpp
+    main.cpp)
 
-set(CMAKE_CXX_FLAGS "-std=gnu++1y -static-libstdc++ -march=atom -mtune=atom -mfpmath=sse")
-qi_create_bin(nao_vision_example "main.cpp")
-qi_use_lib(nao_vision_example ALCOMMON ALPROXIES noos openssl) #ALVISION OPENCV2_CORE OPENCV2_HIGHGUI)
+if(OPTIMIZEDIMAGE_IS_REMOTE)
+    add_definitions( " -DOPTIMIZEDIMAGE_IS_REMOTE ")
+    qi_create_bin(optimized_image ${_srcs})
+else()
+    # Create a plugin, that is a shared library, and make
+    # sure it is built in lib/naoqi
+    qi_create_lib(image_module SHARED ${_srcs} SUBFOLDER naoqi)
+endif()
+
+qi_use_lib(image_module ALCOMMON BOOST ALVISION OPENCV2_CORE OPENCV2_HIGHGUI)

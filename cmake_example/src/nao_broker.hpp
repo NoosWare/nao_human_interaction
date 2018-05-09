@@ -18,7 +18,7 @@ public:
     boost::shared_ptr<AL::ALBroker> get_broker();
 
     template <class module>
-    void start(std::string name);
+    boost::shared_ptr<module> start(std::string name);
 private:
     boost::shared_ptr<AL::ALBroker> broker_;
 
@@ -27,7 +27,7 @@ private:
  * Implementation
  */
 template <class module>
-void nao_broker::start(std::string name)
+boost::shared_ptr<module> nao_broker::start(std::string name)
 {
     // Deal with ALBrokerManager singleton (add your borker into NAOqi)
     AL::ALBrokerManager::setInstance(broker_->fBrokerManager.lock());
@@ -35,7 +35,7 @@ void nao_broker::start(std::string name)
 
     // Now it's time to load your module with
     // AL::ALModule::createModule<your_module>(<broker_create>, <your_module>);
-    AL::ALModule::createModule<module>(broker_, name);
+    return AL::ALModule::createModule<module>(broker_, name);
 }
 
 #endif

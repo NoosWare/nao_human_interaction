@@ -8,7 +8,7 @@
 #include "src/nao_walk.hpp"
 #include "src/nao_broker.hpp"
 #include "src/event.hpp"
-#include "src/optimized_image.hpp"
+#include "optimizedimage.hpp"
 
 #define BOOST_SIGNALS_NO_DEPRECATION_WARNING
 
@@ -30,7 +30,10 @@ int main(int argc, char* argv[])
     nao_broker broker_nao;
     
     broker_nao.start<event>("event");
-    broker_nao.start<optimized_image>("oi");
+
+    optimized_image opi(broker_nao.get_broker(), "opiu");
+    opi.optimizedImageProcessing();    
+/*
     std::stringstream ss(argv[2]);
     bool reset;
     ss >> std::boolalpha >> reset;
@@ -45,5 +48,6 @@ int main(int argc, char* argv[])
         nao_walk walk;
         walk.stop_posture();
     }
-  return 0;
+*/
+    return 0;
 }

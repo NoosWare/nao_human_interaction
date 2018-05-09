@@ -1,36 +1,43 @@
-#include <noos/noos>
-#include <iostream>
-#include <alerror/alerror.h>
-#include <alproxies/altexttospeechproxy.h>
+#include "optimizedimage.hpp"
 
-int main()
+#include <boost/shared_ptr.hpp>
+
+#include <alcommon/albroker.h>
+#include <alcommon/albrokermanager.h>
+
+// we're in a dll, so export the entry point
+#ifdef _WIN32
+# define ALCALL __declspec(dllexport)
+#else
+# define ALCALL
+#endif
+
+extern "C"
 {
-    try {
-    AL::ALTextToSpeechProxy tts("127.0.0.1", 9559);
-    
-    int i = 0;
-    auto callback = [&](std::vector<std::string> services) {
-         std::cout << "available services: " << std::endl;
-         int i = 0;
-         for (const auto name : services) {
-            std::cout << name << std::endl;
-            if (i == 0) {
-                tts.say(name);
-                i++;
-            }
-         }
-     };                     
-
-    noos::cloud::platform plat = {"85.10.206.221", "9001", "test_token", "test"};
-    noos::cloud::callable<noos::cloud::available_services,false> query(callback, plat);
-    query.send(2);
-    //tts.say("Hello");
-    }
-    catch (const AL::ALError& e)
+    ALCALL int _createModule(boost::shared_ptr<AL::ALBroker> pBroker)
     {
-        std::cerr << "Caught exception: " << e.what() << std::endl;
-        exit(1);
+        // init broker with the main broker instance
+        // from the parent executable
+        AL::ALBrokerManager::setInstance(pBroker->fBrokerManager.lock());
+        AL::ALBrokerManager::getInstance()->addBroker(pBroker);
+        AL::ALModule::createModule<optimized_image>( pBroker, "OptimizedImage" );
+
+        return 0;
     }
-    exit(0);
-    //return 0;
+
+    ALCALL int _closeModule()
+    {
+        return 0;
+    }
 }
+
+#ifdef OPTIMIZEDIMAGE_IS_REMOTE
+    int main(int argc, char *argv[])
+    {
+        // pointer to createModule
+        TMainType sig;
+        sig = &_createModule;
+        // call main
+        ALTools::mainFunction("optimizedimage", argc, argv, sig);
+    }
+#endif

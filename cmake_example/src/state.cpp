@@ -22,11 +22,8 @@ void state::reset()
 nao_state::nao_state()
 : detecting_faces_(std::bind(&nao_state::face_callback, this, std::placeholders::_1)),
   f_extras_(std::bind(&nao_state::expression_callback, this, std::placeholders::_1),
-            std::bind(&nao_state::age_callback, this, std::placeholders::_1)),
-  im_module_(nao_broker::get_broker(), "optimized_image")
+            std::bind(&nao_state::age_callback, this, std::placeholders::_1))
 {
-    im_module_.init();
-    //nao_broker::start<optimized_image>("optimized_image");
 }
 
 state nao_state::new_state()
@@ -35,7 +32,7 @@ state nao_state::new_state()
     auto now = boost::chrono::system_clock::now();
     
     //get_image()(robot_ip::ip, image_);
-    im_module_.optimizedImageProcessing();
+    //im_module_->optimizedImageProcessing();
     //image_ = im_module_.get_image();
 
     printf("get_image: %lld \n", boost::chrono::duration_cast<boost::chrono::milliseconds>(boost::chrono::system_clock::now() - now).count());
