@@ -3,11 +3,6 @@
 
 #include "includes.ihh"
 
-namespace AL
-{
-  class ALBroker;
-}
-
 /**
  * @brief Obtain images from nao in an optimized way
  * @see http://doc.aldebaran.com/1-14/dev/cpp/examples/vision/optimizedimage/optimizedimage.html#cpp-tutos-optimized-access-images
@@ -15,7 +10,6 @@ namespace AL
  * @date 08.05.2018
  */
 class optimized_image
-: public AL::ALModule
 {
 public:
 
@@ -29,17 +23,14 @@ public:
     void init();
 
     ///@brief process the image
-    void optimizedImageProcessing();
-
-    ///@brief access to the image
-    cv::Mat get_image();
+    cv::Mat optimizedImageProcessing();
 
 private:
 
     AL::ALVideoDeviceProxy fVideoProxy_;
     std::string fGVMId_;
 
-    AL::ALImage* fImagePointer_;
+    AL::ALValue fImage_;
     cv::Mat image_; 
 
 };

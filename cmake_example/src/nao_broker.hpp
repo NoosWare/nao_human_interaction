@@ -14,6 +14,9 @@ public:
     ///@brief constructor
     nao_broker();
 
+    ///@brief constructor
+    nao_broker(std::string ip);
+
     ///@return broker
     boost::shared_ptr<AL::ALBroker> get_broker();
 

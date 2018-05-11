@@ -22,9 +22,9 @@ void state::reset()
 nao_state::nao_state()
 : detecting_faces_(std::bind(&nao_state::face_callback, this, std::placeholders::_1)),
   f_extras_(std::bind(&nao_state::expression_callback, this, std::placeholders::_1),
-            std::bind(&nao_state::age_callback, this, std::placeholders::_1))
-{
-}
+            std::bind(&nao_state::age_callback, this, std::placeholders::_1)),
+  op_image_(nao_broker::get_broker(), "opi")
+{}
 
 state nao_state::new_state()
 {
@@ -34,13 +34,14 @@ state nao_state::new_state()
     //get_image()(robot_ip::ip, image_);
     //im_module_->optimizedImageProcessing();
     //image_ = im_module_.get_image();
+    image_ = op_image_.optimizedImageProcessing();
 
     printf("get_image: %lld \n", boost::chrono::duration_cast<boost::chrono::milliseconds>(boost::chrono::system_clock::now() - now).count());
-    if (!image_.empty()) {
-        detecting_faces_.send(image_);
-    }
-    tactile_sensor touched_sensor;
-    state_.head_touched = touched_sensor.touched; 
+    //if (!image_.empty()) {
+    //    detecting_faces_.send(image_);
+    //}
+    //tactile_sensor touched_sensor;
+    //state_.head_touched = touched_sensor.touched; 
     printf("sensor touched: %x \n", state_.head_touched);
     return state_;
 }

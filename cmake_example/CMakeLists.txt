@@ -18,7 +18,7 @@ add_executable(face_detection main.cpp
                               src/nao_walk.cpp
                               src/event.cpp
                               src/nao_broker.cpp
-                              src/image_optimized.cpp
+                              src/optimized_image.cpp
               )
 
 set(OPENSSL_USE_STATIC_LIBS ON)
@@ -59,10 +59,6 @@ message(STATUS ${OPENCV_CORE_LIBRARY})
 find_library(OPENCV_HIGHGUI_LIBRARY NAMES opencv_highgui HINTS ${LIB_PATH})
 message(STATUS ${OPENCV_HIGHGUI_LIBRARY})
 
-#CUSTOM MODULES
-find_library(IMAGE_MODULE NAMES image_module HINTS "/home/ubuntu14/dev/nao_vision_example/qibuild_example/build-mytoolchain/sdk/lib/naoqi/")
-message(STATUS ${IMAGE_MODULE})
-
 #COMMON
 find_package(Threads REQUIRED)
 find_library(Boost_SYSTEM NAMES boost_system HINTS ${LIB_PATH})
@@ -76,7 +72,6 @@ message(STATUS ${Boost_LIBRARIES})
 include_directories("/usr/include"
                     "/usr/local/include"
                     ${INCLUDE_PATH}
-                    "/home/ubuntu14/dev/nao_vision_example/qibuild_example/"
                    )
 
 set(NAO_LIBRARIES ${ALPROXIES_LIBRARY}
