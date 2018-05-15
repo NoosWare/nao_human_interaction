@@ -6,19 +6,23 @@ detect_faces::detect_faces(std::function<void(std::vector<noos::object::person>)
 
 void detect_faces::send(const cv::Mat & pic)
 {
+
+        auto now = boost::chrono::system_clock::now();
     //openCV is required because the raw data doesn't have png or jpg format,
     //required for the noos platform
-    //if (!query_) {
+    if (!query_) {
         query_ = std::make_unique<noos::cloud::callable<noos::cloud::face_recognition,
-                                                        false>>(face_cb,
+                                                        true>>(face_cb,
                                                                 noos_platform::noos,
                                                                 mat_to_pic()(pic));
-    //}
-    //else {
-    //    query_->object = noos::cloud::face_recognition(mat_to_pic()(pic));
-    //}
+    }
+    else {
+        query_->object = noos::cloud::face_recognition(mat_to_pic()(pic));
+    }
     if (query_)
-        query_->send();
+        query_->send(5);
+
+    printf("SEND : %lld \n", boost::chrono::duration_cast<boost::chrono::milliseconds>(boost::chrono::system_clock::now() - now).count());
 }
 
 face_extras::face_extras(std::function<void(std::vector<std::pair<std::string,float>>)> expression_cb,
@@ -41,7 +45,7 @@ void face_extras::batch_send(const cv::Mat & picture,
     //    batch_->object = vbatch(new_pic, exp_tie_, age_tie_);
     //}
     if (batch_) {
-        batch_->send();
+        batch_->send(5);
     }
 }
 

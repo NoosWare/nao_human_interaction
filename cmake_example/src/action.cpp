@@ -37,13 +37,13 @@ void decide_action::do_action()
         latest_state.head_data.angle_head != 0) {
         move_head::move(latest_state.head_data.angle_head,
                         latest_state.head_data.movement_time); 
-        /*if (!check_walk(latest_state)) {
+        if (!check_walk(latest_state)) {
             if (game::play(latest_state)) {
                 printf("end of the game");
                 stop();
                 return;
             }
-        }*/
+        }
         printf("\n %s \n", latest_state.face.name.c_str());
     }
     printf("ACTION_TIME: %lld \n", boost::chrono::duration_cast<boost::chrono::milliseconds>(boost::chrono::system_clock::now() - now).count());
@@ -62,7 +62,7 @@ bool decide_action::check_walk(state lstate)
     float zero = 0.0f;
     if (!lstate.face.close_face) {
         //nao_walk::walk(distance_, zero, lstate.head_data.angle_head);
-        move_head::move(zero, lstate.head_data.movement_time);
+        //move_head::move(zero, lstate.head_data.movement_time);
         return true;
     }
     return false;

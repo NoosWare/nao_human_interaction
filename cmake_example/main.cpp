@@ -21,7 +21,6 @@ int main(int argc, char* argv[])
     }
 
     const std::string robotIp(argv[1]);
-    cv::Mat frame;
     configuration parameters;
     parameters.set_ip_nao(robotIp);
     parameters.set_noos("test", "test_token");
@@ -29,7 +28,7 @@ int main(int argc, char* argv[])
     decide_action actions;
     nao_broker broker_nao;
     
-    broker_nao.start<event>("event");
+    broker_nao.start<event>("tactile_event");
 
     std::stringstream ss(argv[2]);
     bool reset;
@@ -42,8 +41,8 @@ int main(int argc, char* argv[])
         float angle_zero = 0.0f;
         head.move(angle_zero, 2.0f);
         head.stop();
-        nao_walk walk;
-        walk.stop_posture();
+        //nao_walk walk;
+        //walk.stop_posture();
     }
     return 0;
 }

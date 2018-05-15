@@ -31,23 +31,26 @@ state nao_state::new_state()
     state_.reset();
     auto now = boost::chrono::system_clock::now();
     
-    //get_image()(robot_ip::ip, image_);
-    //im_module_->optimizedImageProcessing();
-    //image_ = im_module_.get_image();
-    image_ = op_image_.optimizedImageProcessing();
+    //image_ = op_image_.optimizedImageProcessing();
+    get_image()(robot_ip::ip, image_);
 
     printf("get_image: %lld \n", boost::chrono::duration_cast<boost::chrono::milliseconds>(boost::chrono::system_clock::now() - now).count());
-    //if (!image_.empty()) {
-    //    detecting_faces_.send(image_);
-    //}
-    //tactile_sensor touched_sensor;
-    //state_.head_touched = touched_sensor.touched; 
-    printf("sensor touched: %x \n", state_.head_touched);
+    if (!image_.empty()) {
+
+        auto now = boost::chrono::system_clock::now();
+        detecting_faces_.send(image_);
+    //    cv::imwrite("face.png", image_);
+        printf("detect faces noos: %lld \n", boost::chrono::duration_cast<boost::chrono::milliseconds>(boost::chrono::system_clock::now() - now).count());
+    }
+    tactile_sensor touched_sensor;
+    state_.head_touched = touched_sensor.touched; 
     return state_;
 }
 
 void nao_state::face_callback(std::vector<noos::object::person> faces)
 {
+    auto now = boost::chrono::system_clock::now();
+    printf("%d \n", faces.size());
     if (faces.size() != 0) { 
         int i = 0;
         int max_size = 0;
@@ -64,6 +67,7 @@ void nao_state::face_callback(std::vector<noos::object::person> faces)
         }
     }
     state_.state_time = boost::chrono::system_clock::now();
+    printf("face callback: %lld \n", boost::chrono::duration_cast<boost::chrono::milliseconds>(boost::chrono::system_clock::now() - now).count());
 }
 
 void nao_state::age_callback(std::vector<std::pair<std::string,float>> ages)

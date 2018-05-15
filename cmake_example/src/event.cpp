@@ -37,7 +37,7 @@ event::event(boost::shared_ptr<AL::ALBroker> broker,
 
 event::~event()
 {
-    fMemoryProxy.unsubscribeToEvent("tactile_sensor", "event");
+    fMemoryProxy.unsubscribeToEvent("tactile_sensor", "tactile_event");
 }
 
 void event::init()
@@ -55,7 +55,7 @@ void event::init()
     * - name of the module to be called for the callback
     * - name of the bound method to be called on event
     */
-    fMemoryProxy.subscribeToEvent("MiddleTactilTouched", "event",
+    fMemoryProxy.subscribeToEvent("MiddleTactilTouched", "tactile_event",
                                   "tactile_sensor");
 }
 

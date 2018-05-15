@@ -20,10 +20,14 @@ add_executable(face_detection main.cpp
                               src/nao_broker.cpp
                               src/optimized_image.cpp
               )
-
+set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
 set(OPENSSL_USE_STATIC_LIBS ON)
 find_package(OpenSSL REQUIRED)
 
+message(STATUS " ${OPENSSL_LIBRARIES}")
+
+
+set(CMAKE_FIND_LIBRARY_SUFFIXES ".so")
 #ALDEBARAN
 set(NAOQI ${NAOQI} "$ENV{HOME}/naoqi-sdk-2.1.4.13-linux32/")
 set(LIB_PATH ${LIB_PATH} "${NAOQI}/lib")

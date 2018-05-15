@@ -51,6 +51,7 @@ bool game::check_age()
         nao_talk::talk(nao_talk::animation["happy"] +
                        "Hurray! I win!" + 
                        nao_talk::animation["s_happy"]);
+        tactile_sensor::set_value(false);
         return true;
     }
     else if (!latest_.face.age.empty() &&
@@ -64,13 +65,8 @@ bool game::check_age()
     }
     else if (!latest_.face.age.empty() &&
              latest_.face.age.compare(previous_age) == 0) {
-        std::string no_new_range = nao_talk::animation["doubt"] +
-                                   "Let me thing a bit more..." +
-                                   nao_talk::animation["s_doubt"];
-        nao_talk::talk(no_new_range);
-        //TODO if the same age is detected more than 3 times, the user win
+        return age_repeated();
     }
-    //TODO: add more cases
     return false;
 }
 
@@ -148,4 +144,25 @@ bool game::check_person()
         counter_change_person_++;
         return false;
     }
+}
+
+bool game::age_repeated()
+{
+    if (new_age_counter_ == 0) {
+        std::string no_new_range = nao_talk::animation["doubt"] +
+                                       "Let me thing a bit more..." +
+                                       nao_talk::animation["s_doubt"];
+        nao_talk::talk(no_new_range);
+        new_age_counter_++;
+        return false;
+    }
+    else if (new_age_counter_ == 3) {
+        std::string no_new_range = nao_talk::animation["no"] +
+                                       "I can't figure out your age... You win!" +
+                                       nao_talk::animation["s_no"];
+        nao_talk::talk(no_new_range);
+        return true;
+    }
+    new_age_counter_++;
+    return false;
 }

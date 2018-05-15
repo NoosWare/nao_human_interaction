@@ -13,6 +13,8 @@ std::map<std::string, std::string> nao_talk::animation {
                {"s_yes",     "^waitTag(alright)"},
                {"beg",       "^startTag(beg)"},
                {"s_beg",     "^waitTag(beg)"},
+               {"no",       "^startTag(oppose)"},
+               {"s_no",     "^waitTag(oppose)"},
                {"you",       "^startTag(you)"},
                {"s_you",     "^waitTag(you)"}};
 

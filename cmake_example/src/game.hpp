@@ -4,6 +4,7 @@
 #include "includes.ihh"
 #include "state.hpp"
 #include "nao_talk.hpp"
+#include "event.hpp"
 
 /**
  * @brief little game for trying to guess the correct age of the user
@@ -12,7 +13,8 @@
  * @date 30.04.2018
  */
 class game
-: public nao_talk
+: public nao_talk,
+  public tactile_sensor
 {
 public:
     bool play(const state & latest);
@@ -33,12 +35,16 @@ private:
     //check who is playing the game
     bool check_person();
 
+    //the age detected is not correct
+    bool age_repeated();
+
     state latest_;
     bool age_asked_ = false;
     std::string previous_age;
     int counter_ = 0;
     std::string previous_label_;
     int counter_change_person_ = 0;
+    int new_age_counter_ = 0;
 
 };
 
