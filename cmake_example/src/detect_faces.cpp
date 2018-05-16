@@ -1,5 +1,16 @@
 #include "detect_faces.hpp"
 
+boost::system::error_code my_error_handler::error_ = boost::system::errc::make_error_code(boost::system::errc::success);
+
+void my_error_handler::operator()(boost::system::error_code & error) const
+{
+    if (error.value() != 0) {
+        std::cout << "Error value: " << error.value() <<
+                    " Error message: " << error.message() << std::endl; 
+    }
+    error_ = error;
+}
+
 detect_faces::detect_faces(std::function<void(std::vector<noos::object::person>)> cb)
 : face_cb(cb) 
 {}
@@ -7,14 +18,16 @@ detect_faces::detect_faces(std::function<void(std::vector<noos::object::person>)
 void detect_faces::send(const cv::Mat & pic)
 {
 
-        auto now = boost::chrono::system_clock::now();
+    auto now = boost::chrono::system_clock::now();
     //openCV is required because the raw data doesn't have png or jpg format,
     //required for the noos platform
     if (!query_) {
         query_ = std::make_unique<noos::cloud::callable<noos::cloud::face_recognition,
-                                                        true>>(face_cb,
-                                                                noos_platform::noos,
-                                                                mat_to_pic()(pic));
+                                                        true,
+                                                        noos::cloud::asio_https,
+                                                        my_error_handler>>(face_cb,
+                                                                           noos_platform::noos,
+                                                                           mat_to_pic()(pic));
     }
     else {
         query_->object = noos::cloud::face_recognition(mat_to_pic()(pic));
@@ -22,6 +35,9 @@ void detect_faces::send(const cv::Mat & pic)
     if (query_)
         query_->send(5);
 
+    if (my_error_handler::error_.value() != 0) {
+        query_.reset();
+    }
     printf("SEND : %lld \n", boost::chrono::duration_cast<boost::chrono::milliseconds>(boost::chrono::system_clock::now() - now).count());
 }
 
@@ -45,7 +61,7 @@ void face_extras::batch_send(const cv::Mat & picture,
     //    batch_->object = vbatch(new_pic, exp_tie_, age_tie_);
     //}
     if (batch_) {
-        batch_->send(5);
+        batch_->send(2);
     }
 }
 

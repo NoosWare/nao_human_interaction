@@ -1,14 +1,10 @@
 #include "src/includes.ihh"
-#include "src/detect_faces.hpp"
-#include "src/common.hpp"
 #include "src/move_head.hpp"
-#include "src/state_factory.hpp"
 #include "src/action.hpp"
 #include "src/configuration.hpp"
 #include "src/nao_walk.hpp"
 #include "src/nao_broker.hpp"
 #include "src/event.hpp"
-#include "src/optimized_image.hpp"
 
 #define BOOST_SIGNALS_NO_DEPRECATION_WARNING
 
@@ -27,13 +23,12 @@ int main(int argc, char* argv[])
 
     decide_action actions;
     nao_broker broker_nao;
-    
-    broker_nao.start<event>("tactile_event");
 
     std::stringstream ss(argv[2]);
     bool reset;
     ss >> std::boolalpha >> reset;
     if (!reset) {
+        broker_nao.start<event>("tactile_event");
         actions.start();
     }
     else {

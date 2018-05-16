@@ -44,7 +44,9 @@ state_factory<state_type, state_class>::state_factory(boost::asio::io_service & 
 template<class state_type, class state_class>
 void state_factory<state_type, state_class>::update_states()
 {
+    auto now = boost::chrono::system_clock::now();
     states_.add(manage_states_.new_state()); 
+    printf("TOTaL SSTATE: %lld \n", boost::chrono::duration_cast<boost::chrono::milliseconds>(boost::chrono::system_clock::now() - now).count());
 }
 
 template<class state_type, class state_class>

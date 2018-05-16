@@ -29,15 +29,15 @@ public:
     ///@brief start
     void start();
 
+    ///@brief stop the processes
+    void stop();
+
 private:
     //@brief take decision
     void do_action();
 
     //walk if the face is too far
     bool check_walk(state lstate);
-
-    //stop the processes
-    void stop();
 
     boost::asio::io_service io1_;
     //boost::asio::io_service io2_;

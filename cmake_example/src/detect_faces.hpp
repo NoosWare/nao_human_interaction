@@ -6,11 +6,25 @@
 #include "configuration.hpp"
 
 /**
+ * @brief A new struct to handle the errors about communication
+ * with the platform
+ * @struct my_error_handler
+ * @date 16.05.2018
+ */
+struct my_error_handler
+{
+    void operator()(boost::system::error_code & error) const;
+
+    static boost::system::error_code error_;
+};
+
+/**
  * @brief Send an image to the NOOS cloud to detect faces
  * @class face_detection
  * @date 12.04.2018
  */
 class detect_faces
+: public my_error_handler
 {
 public:
     ///@brief constructor adding callback
@@ -20,8 +34,12 @@ public:
     void send(const cv::Mat & pic);
 
 private:
-    // callable for face_detection
-    std::unique_ptr<noos::cloud::callable<noos::cloud::face_recognition, true>> query_;
+    // callable for face_recognition
+    std::unique_ptr<noos::cloud::callable<noos::cloud::face_recognition, 
+                                          true,
+                                          noos::cloud::asio_https,
+                                          my_error_handler>> query_;
+    // callback for face recognition
     std::function<void(std::vector<noos::object::person>)> face_cb;
 };
 

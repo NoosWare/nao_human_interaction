@@ -7,7 +7,6 @@
 #include "common.hpp"
 #include "move_head.hpp"
 #include "nao_broker.hpp"
-#include "optimized_image.hpp"
 
 /**
  * @brief data related with the face detected
@@ -98,8 +97,5 @@ private:
 
     //image
     cv::Mat image_;
-
-    //optimized image
-    optimized_image op_image_;
 };
 #endif
