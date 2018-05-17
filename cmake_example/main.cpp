@@ -28,7 +28,17 @@ int main(int argc, char* argv[])
     bool reset;
     ss >> std::boolalpha >> reset;
     if (!reset) {
-        broker_nao.start<event>("tactile_event");
+        boost::shared_ptr<event> module_ptr;
+        try { 
+            module_ptr = broker_nao.start<event>("tactile_event");
+        }
+        catch (const AL::ALError& e) {
+            std::cerr << "Caught Event exception:  " << e.what() << std::endl;
+            if (module_ptr)
+                module_ptr->exit();
+            broker_nao.stop();
+            return 1;
+        }
         actions.start();
     }
     else {
@@ -36,8 +46,9 @@ int main(int argc, char* argv[])
         float angle_zero = 0.0f;
         head.move(angle_zero, 2.0f);
         head.stop();
-        //nao_walk walk;
-        //walk.stop_posture();
+        nao_walk walk(false);
+        walk.stop_posture();
     }
+    broker_nao.stop();
     return 0;
 }

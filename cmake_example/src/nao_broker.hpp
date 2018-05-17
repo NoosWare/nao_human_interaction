@@ -20,8 +20,13 @@ public:
     ///@return broker
     boost::shared_ptr<AL::ALBroker> get_broker();
 
+    ///@brief start a module using this broker
     template <class module>
     boost::shared_ptr<module> start(std::string name);
+
+    ///@brief stop broker
+    void stop();
+
 private:
     boost::shared_ptr<AL::ALBroker> broker_;
 

@@ -44,7 +44,6 @@ void game::say_age()
 
 bool game::check_age()
 {
-    //TODO: change the range of expressions --> not detecting happiness too easily :(
     if (latest_.face.expression.compare("happy") == 0 ||
         latest_.face.expression.compare("neutral") == 0 ||
         latest_.head_touched) {
@@ -120,7 +119,7 @@ bool game::check_person()
         return true;
     }
     else if (previous_label_ != latest_.face.label &&
-             counter_change_person_ == 0) {
+             counter_change_person_ == 1) {
         std::string sentence = nao_talk::animation["beg"] +
                                "Hey " + latest_.face.name + "! I wasn't playing with you! Wait your turn, please!" +
                                nao_talk::animation["s_beg"];
@@ -165,4 +164,14 @@ bool game::age_repeated()
     }
     new_age_counter_++;
     return false;
+}
+
+void game::reset_variables()
+{
+    age_asked_ = false;
+    previous_age.clear();
+    counter_ = 0;
+    previous_label_.clear();
+    counter_change_person_ = 0;
+    new_age_counter_ = 0;
 }

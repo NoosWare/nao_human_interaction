@@ -38,6 +38,9 @@ private:
     //the age detected is not correct
     bool age_repeated();
 
+    //reset variables for playing again
+    void reset_variables();
+
     state latest_;
     bool age_asked_ = false;
     std::string previous_age;

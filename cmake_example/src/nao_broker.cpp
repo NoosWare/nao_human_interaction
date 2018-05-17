@@ -52,3 +52,8 @@ boost::shared_ptr<AL::ALBroker> nao_broker::get_broker()
 {
     return broker_;
 }
+
+void nao_broker::stop()
+{
+    broker_->shutdown();
+}

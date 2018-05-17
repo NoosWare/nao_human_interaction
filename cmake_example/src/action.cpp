@@ -2,7 +2,6 @@
 
 decide_action::decide_action()
 : io1_(),
-  //io2_(),
   factory_(io1_),
   clock_(io1_, boost::bind(&decide_action::do_action, this), 200)
 {}
@@ -14,17 +13,15 @@ decide_action::~decide_action()
 
 void decide_action::start()
 {
-    while (!io1_.stopped()) //&& !io2_.stopped())
-    {
-      std::size_t ran = 0;
-      ran += io1_.poll();
-      //ran += io2_.poll();
+    while (!io1_.stopped()) {
+        std::size_t ran = 0;
+        ran += io1_.poll();
 
-      // If no handlers ran, then sleep.
-      if (0 == ran)
-      {
-        boost::this_thread::sleep_for(boost::chrono::milliseconds(50));
-      }
+        // If no handlers ran, then sleep.
+        if (0 == ran)
+        {
+            boost::this_thread::sleep_for(boost::chrono::milliseconds(50));
+        }
     }
 }
 
@@ -54,15 +51,15 @@ void decide_action::stop()
     io1_.stop();
     clock_.stop();
     move_head::stop();
-    //nao_walk::stop_posture();
+    nao_walk::stop_posture();
 }
 
 bool decide_action::check_walk(state lstate)
 {
     float zero = 0.0f;
     if (!lstate.face.close_face) {
-        //nao_walk::walk(distance_, zero, lstate.head_data.angle_head);
-        //move_head::move(zero, lstate.head_data.movement_time);
+        nao_walk::walk(distance_, zero, lstate.head_data.angle_head);
+        move_head::move(zero, lstate.head_data.movement_time);
         return true;
     }
     return false;

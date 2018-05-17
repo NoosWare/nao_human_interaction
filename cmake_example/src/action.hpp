@@ -16,8 +16,8 @@
  */
 class decide_action
 : public move_head,
-  public game/*,
-  public nao_walk*/
+  public game,
+  public nao_walk
 {
 public:
     ///@brief constructor
@@ -40,7 +40,6 @@ private:
     bool check_walk(state lstate);
 
     boost::asio::io_service io1_;
-    //boost::asio::io_service io2_;
 
     state_factory<state, nao_state> factory_; 
     timer clock_;

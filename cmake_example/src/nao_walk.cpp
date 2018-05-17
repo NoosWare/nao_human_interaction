@@ -1,17 +1,23 @@
 #include "nao_walk.hpp"
 #include "configuration.hpp"
 
-nao_walk::nao_walk()
+nao_walk::nao_walk(bool stand)
 : motion_(robot_ip::ip),
-  robotPosture_(robot_ip::ip)
+  robotPosture_(robot_ip::ip),
+  stand_(stand)
 {
-    robotPosture_.goToPosture("StandInit", 0.5f);
+    if (stand_)
+        robotPosture_.goToPosture("StandInit", 0.5f);
 }
 
 void nao_walk::walk(float x,
                     float y,
                     float theta)
 {
+    if (!stand_) {
+        robotPosture_.goToPosture("StandInit", 0.5f);
+        stand_ = true;
+    }
     motion_.moveTo(x, y, theta);
     //motion_.waitUntilMoveIsFinished();
 }

@@ -37,6 +37,7 @@ void detect_faces::send(const cv::Mat & pic)
 
     if (my_error_handler::error_.value() != 0) {
         query_.reset();
+        error_ = boost::system::errc::make_error_code(boost::system::errc::success);
     }
     printf("SEND : %lld \n", boost::chrono::duration_cast<boost::chrono::milliseconds>(boost::chrono::system_clock::now() - now).count());
 }

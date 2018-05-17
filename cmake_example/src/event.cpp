@@ -68,6 +68,7 @@ void event::tactile_sensor()
     */
     fState =  fMemoryProxy.getData("MiddleTactilTouched");
     if (fState > 0.5) { 
+        printf("head touched");
         tactile_sensor::set_value(!tactile_sensor::touched);
     }
 }

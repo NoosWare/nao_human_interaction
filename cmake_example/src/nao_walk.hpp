@@ -12,7 +12,7 @@ class nao_walk
 {
 public:
     ///@brief constructor
-    nao_walk();
+    nao_walk(bool stand = true);
 
     ///@brief set position to move nao
     void walk(float x,
@@ -28,6 +28,7 @@ public:
 private:
     AL::ALMotionProxy motion_;
     AL::ALRobotPostureProxy robotPosture_;
+    bool stand_ = false;
 };
 
 #endif
