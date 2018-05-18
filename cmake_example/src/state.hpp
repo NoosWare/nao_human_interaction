@@ -33,6 +33,9 @@ struct face_data
     ///@brief expression detected
     std::string expression;
 
+    ///@brief gender
+    std::string gender;
+
     ///@brief reset 
     void reset();
 };
@@ -85,6 +88,9 @@ private:
 
     // face expressions callback
     void expression_callback(std::vector<std::pair<std::string,float>> expressions);
+
+    // gender callback
+    void gender_callback(std::vector<std::pair<std::string,float>> ages);
 
     //detect faces in the image
     detect_faces detecting_faces_;

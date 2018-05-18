@@ -49,6 +49,5 @@ int main(int argc, char* argv[])
         nao_walk walk(false);
         walk.stop_posture();
     }
-    broker_nao.stop();
     return 0;
 }

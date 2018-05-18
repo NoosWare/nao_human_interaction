@@ -43,9 +43,11 @@ void detect_faces::send(const cv::Mat & pic)
 }
 
 face_extras::face_extras(std::function<void(std::vector<std::pair<std::string,float>>)> expression_cb,
-                         std::function<void(std::vector<std::pair<std::string,float>>)> age_cb)
+                         std::function<void(std::vector<std::pair<std::string,float>>)> age_cb,
+                         std::function<void(std::vector<std::pair<std::string,float>>)> gender_cb)
 : exp_tie_(expression_cb),
-  age_tie_(age_cb)
+  age_tie_(age_cb),
+  gender_tie_(gender_cb)
 {}
 
 void face_extras::batch_send(const cv::Mat & picture,
@@ -56,7 +58,8 @@ void face_extras::batch_send(const cv::Mat & picture,
         batch_ = std::make_unique<noos::cloud::callable<vbatch,false>>(new_pic, 
                                                                        noos_platform::noos, 
                                                                        exp_tie_,
-                                                                       age_tie_); 
+                                                                       age_tie_,
+                                                                       gender_tie_); 
     //} 
     //else {
     //    batch_->object = vbatch(new_pic, exp_tie_, age_tie_);

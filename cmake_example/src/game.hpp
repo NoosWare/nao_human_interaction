@@ -17,37 +17,29 @@ class game
   public tactile_sensor
 {
 public:
-    bool play(const state & latest);
+    /// @brief start the little game
+    void play(const state & latest);
+
+    /// @brief NAO asking to catch people in front of him
+    void say_dif();
+
+    /// @brief finish the game
+    bool check_end(const state & latest);
 
 private:
     //start game
-    bool start();
+    void start();
 
     //guess age
-    void say_age();
-
-    //check age said with expression feedback
-    bool check_age();
-
-    //for change a bit what NAO says
-    void say_dif(std::string expression);
+    void say_data();
 
     //check who is playing the game
-    bool check_person();
-
-    //the age detected is not correct
-    bool age_repeated();
-
-    //reset variables for playing again
-    void reset_variables();
+    void check_person();
 
     state latest_;
-    bool age_asked_ = false;
-    std::string previous_age;
+    bool present_ = true;
     int counter_ = 0;
-    std::string previous_label_;
-    int counter_change_person_ = 0;
-    int new_age_counter_ = 0;
+    std::set<std::string> people_;
 
 };
 

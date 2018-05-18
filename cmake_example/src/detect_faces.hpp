@@ -53,7 +53,8 @@ class face_extras
 public:
     ///@brief constructor
     face_extras(std::function<void(std::vector<std::pair<std::string,float>>)> expression_cb,
-                std::function<void(std::vector<std::pair<std::string,float>>)> age_cb);
+                std::function<void(std::vector<std::pair<std::string,float>>)> age_cb,
+                std::function<void(std::vector<std::pair<std::string,float>>)> gender_cb);
 
     ///@brief send vision batch object
     void batch_send(const cv::Mat & picture,
@@ -65,12 +66,14 @@ public:
 
 private:
     using vbatch = noos::cloud::vision_batch<noos::cloud::tied<noos::cloud::face_expression>,
-                                             noos::cloud::tied<noos::cloud::age_detection>>;
+                                             noos::cloud::tied<noos::cloud::age_detection>,
+                                             noos::cloud::tied<noos::cloud::gender_detection>>;
 
     // callable for vision_batch
     std::unique_ptr<noos::cloud::callable<vbatch, false>> batch_;
     
-    noos::cloud::tied<noos::cloud::face_expression> exp_tie_;
-    noos::cloud::tied<noos::cloud::age_detection>   age_tie_;
+    noos::cloud::tied<noos::cloud::face_expression>   exp_tie_;
+    noos::cloud::tied<noos::cloud::age_detection>     age_tie_;
+    noos::cloud::tied<noos::cloud::gender_detection>  gender_tie_;
 };
 #endif

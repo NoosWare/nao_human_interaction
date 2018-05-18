@@ -21,6 +21,9 @@ public:
     ///@brief animations map
     static std::map<std::string, std::string> animation;
 
+    ///@brief nao say a presentation of the app
+    void presentation();
+
 private:
     AL::ALAnimatedSpeechProxy tts_;
 };

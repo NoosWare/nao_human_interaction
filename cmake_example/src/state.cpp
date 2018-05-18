@@ -22,7 +22,8 @@ void state::reset()
 nao_state::nao_state()
 : detecting_faces_(std::bind(&nao_state::face_callback, this, std::placeholders::_1)),
   f_extras_(std::bind(&nao_state::expression_callback, this, std::placeholders::_1),
-            std::bind(&nao_state::age_callback, this, std::placeholders::_1))
+            std::bind(&nao_state::age_callback, this, std::placeholders::_1),
+            std::bind(&nao_state::gender_callback, this, std::placeholders::_1))
 {}
 
 state nao_state::new_state()
@@ -77,6 +78,21 @@ void nao_state::age_callback(std::vector<std::pair<std::string,float>> ages)
             }
         }
         state_.face.age = ages[pos].first;
+    }
+}
+
+void nao_state::gender_callback(std::vector<std::pair<std::string,float>> gender)
+{
+    if (gender.size() != 0) {
+        float max_prob = 0;
+        int pos = 0;
+        for (auto i = 0; i < gender.size(); i++) {
+            if (gender[i].second > max_prob) {
+               max_prob = gender[i].second;
+               pos = i;
+            }
+        }
+        state_.face.gender = gender[pos].first;
     }
 }
 
