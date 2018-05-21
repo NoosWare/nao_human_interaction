@@ -1,0 +1,34 @@
+// Aldebaran includes.
+#include <alproxies/alvideodeviceproxy.h>
+#include <alvision/alimage.h>
+#include <alvision/alvisiondefinitions.h>
+#include <alerror/alerror.h>
+#include <alproxies/almotionproxy.h>
+#include <alproxies/altexttospeechproxy.h>
+#include <alproxies/almotionproxy.h>
+#include <alproxies/alrobotpostureproxy.h>
+#include <qi/os.hpp>
+#include <alcommon/almodule.h>
+#include <alcommon/albroker.h>
+#include <alcommon/albrokermanager.h>
+#include <alproxies/alanimatedspeechproxy.h>
+
+// Opencv includes.
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+
+//Common
+#include <iostream>
+#include <string>
+#include <functional>
+#include <future>
+#include <thread>
+
+// NOOS API includes
+#include <noos/noos>
+//Boost
+#include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/thread/thread.hpp> 
+#include <boost/chrono.hpp>
+#include <boost/asio.hpp>
+#include <boost/bind.hpp>
