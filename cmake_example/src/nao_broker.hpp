@@ -2,6 +2,7 @@
 #define NAO_BROKER_HPP
 
 #include "includes.ihh"
+#include "event.hpp"
 
 /**
  * @brief creates the broker for the ALModules
@@ -21,29 +22,19 @@ public:
     boost::shared_ptr<AL::ALBroker> get_broker();
 
     ///@brief start a module using this broker
-    template <class module>
-    boost::shared_ptr<module> start(std::string name);
+    boost::shared_ptr<event> start(std::string name);
 
     ///@brief stop broker
     void stop();
 
 private:
+    void create_module();
+    
     boost::shared_ptr<AL::ALBroker> broker_;
+    boost::shared_ptr<event> event_module_;
 
 };
 /*
  * Implementation
  */
-template <class module>
-boost::shared_ptr<module> nao_broker::start(std::string name)
-{
-    // Deal with ALBrokerManager singleton (add your borker into NAOqi)
-    AL::ALBrokerManager::setInstance(broker_->fBrokerManager.lock());
-    AL::ALBrokerManager::getInstance()->addBroker(broker_);
-
-    // Now it's time to load your module with
-    // AL::ALModule::createModule<your_module>(<broker_create>, <your_module>);
-    return AL::ALModule::createModule<module>(broker_, name);
-}
-
 #endif
