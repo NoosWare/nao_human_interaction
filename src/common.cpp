@@ -62,7 +62,7 @@ void face_location::operator()(float middle,
     time = 0.5f;
     //size of the image 320 x 240 pixels
     //max angle of vision of the camera is 61 degrees(1.06 rad)
-    angle += ((middle * 1.06 / 320) - 0.53) * (-1);
+    angle = ((middle * 1.06 / 320) - 0.53) * (-1);
 }
 
 void bigger_face::operator()(const std::vector<noos::object::person> faces,

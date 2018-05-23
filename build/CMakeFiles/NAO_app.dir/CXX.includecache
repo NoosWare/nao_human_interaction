@@ -44,25 +44,13 @@ nao_walk.hpp
 includes.ihh
 /home/ubuntu14/dev/nao_vision_example/src/includes.ihh
 
-/home/ubuntu14/dev/nao_vision_example/src/common.cpp
-common.hpp
-/home/ubuntu14/dev/nao_vision_example/src/common.hpp
-
 /home/ubuntu14/dev/nao_vision_example/src/common.hpp
 includes.ihh
 /home/ubuntu14/dev/nao_vision_example/src/includes.ihh
 
-/home/ubuntu14/dev/nao_vision_example/src/configuration.cpp
-configuration.hpp
-/home/ubuntu14/dev/nao_vision_example/src/configuration.hpp
-
 /home/ubuntu14/dev/nao_vision_example/src/configuration.hpp
 includes.ihh
 /home/ubuntu14/dev/nao_vision_example/src/includes.ihh
-
-/home/ubuntu14/dev/nao_vision_example/src/detect_faces.cpp
-detect_faces.hpp
-/home/ubuntu14/dev/nao_vision_example/src/detect_faces.hpp
 
 /home/ubuntu14/dev/nao_vision_example/src/detect_faces.hpp
 includes.ihh
@@ -71,22 +59,6 @@ common.hpp
 /home/ubuntu14/dev/nao_vision_example/src/common.hpp
 configuration.hpp
 /home/ubuntu14/dev/nao_vision_example/src/configuration.hpp
-
-/home/ubuntu14/dev/nao_vision_example/src/event.cpp
-event.hpp
-/home/ubuntu14/dev/nao_vision_example/src/event.hpp
-iostream
--
-alvalue/alvalue.h
--
-alcommon/alproxy.h
--
-alcommon/albroker.h
--
-qi/log.hpp
--
-althread/alcriticalsection.h
--
 
 /home/ubuntu14/dev/nao_vision_example/src/event.hpp
 iostream
@@ -98,17 +70,9 @@ alproxies/almemoryproxy.h
 althread/almutex.h
 -
 
-/home/ubuntu14/dev/nao_vision_example/src/event_timer.cpp
-event_timer.hpp
-/home/ubuntu14/dev/nao_vision_example/src/event_timer.hpp
-
 /home/ubuntu14/dev/nao_vision_example/src/event_timer.hpp
 includes.ihh
 /home/ubuntu14/dev/nao_vision_example/src/includes.ihh
-
-/home/ubuntu14/dev/nao_vision_example/src/game.cpp
-game.hpp
-/home/ubuntu14/dev/nao_vision_example/src/game.hpp
 
 /home/ubuntu14/dev/nao_vision_example/src/game.hpp
 includes.ihh
@@ -174,19 +138,9 @@ boost/asio.hpp
 boost/bind.hpp
 -
 
-/home/ubuntu14/dev/nao_vision_example/src/move_head.cpp
-move_head.hpp
-/home/ubuntu14/dev/nao_vision_example/src/move_head.hpp
-
 /home/ubuntu14/dev/nao_vision_example/src/move_head.hpp
 includes.ihh
 /home/ubuntu14/dev/nao_vision_example/src/includes.ihh
-configuration.hpp
-/home/ubuntu14/dev/nao_vision_example/src/configuration.hpp
-
-/home/ubuntu14/dev/nao_vision_example/src/nao_broker.cpp
-nao_broker.hpp
-/home/ubuntu14/dev/nao_vision_example/src/nao_broker.hpp
 configuration.hpp
 /home/ubuntu14/dev/nao_vision_example/src/configuration.hpp
 
@@ -196,31 +150,15 @@ includes.ihh
 event.hpp
 /home/ubuntu14/dev/nao_vision_example/src/event.hpp
 
-/home/ubuntu14/dev/nao_vision_example/src/nao_talk.cpp
-nao_talk.hpp
-/home/ubuntu14/dev/nao_vision_example/src/nao_talk.hpp
-
 /home/ubuntu14/dev/nao_vision_example/src/nao_talk.hpp
 includes.ihh
 /home/ubuntu14/dev/nao_vision_example/src/includes.ihh
 configuration.hpp
 /home/ubuntu14/dev/nao_vision_example/src/configuration.hpp
 
-/home/ubuntu14/dev/nao_vision_example/src/nao_walk.cpp
-nao_walk.hpp
-/home/ubuntu14/dev/nao_vision_example/src/nao_walk.hpp
-configuration.hpp
-/home/ubuntu14/dev/nao_vision_example/src/configuration.hpp
-
 /home/ubuntu14/dev/nao_vision_example/src/nao_walk.hpp
 includes.ihh
 /home/ubuntu14/dev/nao_vision_example/src/includes.ihh
-
-/home/ubuntu14/dev/nao_vision_example/src/state.cpp
-state.hpp
-/home/ubuntu14/dev/nao_vision_example/src/state.hpp
-event.hpp
-/home/ubuntu14/dev/nao_vision_example/src/event.hpp
 
 /home/ubuntu14/dev/nao_vision_example/src/state.hpp
 includes.ihh
@@ -482,12 +420,6 @@ alproxies/api.h
 
 /home/ubuntu14/naoqi-sdk-2.1.4.13-linux32/include/alproxies/api.h
 qi/macro.hpp
--
-
-/home/ubuntu14/naoqi-sdk-2.1.4.13-linux32/include/althread/alcriticalsection.h
-althread/config.h
--
-boost/shared_ptr.hpp
 -
 
 /home/ubuntu14/naoqi-sdk-2.1.4.13-linux32/include/althread/almutex.h

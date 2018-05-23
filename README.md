@@ -43,7 +43,7 @@ cmake .. -DNAOQI_PATH=/your/path
 
 `{HOME}/naoqi-sdk-2.1.4.13-linux32/` is the default path and version in the project. 
 Otherwise, use the `-DNAOQI_PATH` option.
-
+i
 ## Building
 
 To build simply do:
