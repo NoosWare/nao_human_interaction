@@ -31,7 +31,6 @@ void decide_action::do_action()
 
     auto latest_state = factory_.last_state();
 
-    printf("head: %d \n ", latest_state.head_touched);
     if (game::check_end(latest_state)) {
         stop();
         return;
@@ -43,12 +42,10 @@ void decide_action::do_action()
         if (!check_walk(latest_state)) {
             game::play(latest_state);
         }
-        printf("\n %s \n", latest_state.face.name.c_str());
     }
     else { 
         game::say_dif();
     }
-    printf("ACTION_TIME: %lld \n", boost::chrono::duration_cast<boost::chrono::milliseconds>(boost::chrono::system_clock::now() - now).count());
 }
 
 void decide_action::stop()

@@ -1,1 +1,0 @@
-/home/ubuntu14/dev/nao_vision_example/build/CMakeFiles/NAO_app.dir

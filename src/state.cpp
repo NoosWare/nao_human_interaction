@@ -29,16 +29,9 @@ nao_state::nao_state()
 state nao_state::new_state()
 {
     state_.reset();
-    auto now = boost::chrono::system_clock::now();
-    
     get_image()(robot_ip::ip, image_);
-
-    printf("get_image: %lld \n", boost::chrono::duration_cast<boost::chrono::milliseconds>(boost::chrono::system_clock::now() - now).count());
     if (!image_.empty()) {
-
-        auto now = boost::chrono::system_clock::now();
         detecting_faces_.send(image_);
-        printf("detect faces noos: %lld \n", boost::chrono::duration_cast<boost::chrono::milliseconds>(boost::chrono::system_clock::now() - now).count());
     }
     tactile_sensor touched_sensor;
     state_.head_touched = touched_sensor.touched; 
@@ -47,7 +40,6 @@ state nao_state::new_state()
 
 void nao_state::face_callback(std::vector<noos::object::person> faces)
 {
-    printf("%d \n", faces.size());
     if (faces.size() != 0) { 
         int i = 0;
         int max_size = 0;
@@ -110,6 +102,5 @@ void nao_state::expression_callback(std::vector<std::pair<std::string,float>> ex
             }
         }
         state_.face.expression = expressions[pos].first;
-        printf("EMOTIONNNNNNNNNNNNNNNNNNNNNNN : %s  %.2f \n", expressions[pos].first.c_str(), expressions[pos].second);
     }
 }
