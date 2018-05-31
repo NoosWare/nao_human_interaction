@@ -72,6 +72,8 @@ void nao_state::age_callback(std::vector<std::pair<std::string,float>> ages)
             }
         }
         state_.face.age = ages[pos].first;
+        auto dash = state_.face.age.find('-');
+        state_.face.age.replace(dash, 1, " to "); 
     }
 }
 
