@@ -29,7 +29,8 @@ struct noos_platform
     static noos::cloud::platform noos;
 
 protected:
-    static void set_platform(std::string user,
+    static void set_platform(std::string ip_plat,
+                             std::string user,
                              std::string pass);
 
 };
@@ -49,7 +50,8 @@ public:
    void set_ip_nao(std::string ip);
 
    ///@brief set noos platform
-   void set_noos(std::string user,
+   void set_noos(std::string ip_plat,
+                 std::string user,
                  std::string pass); 
 };
 

@@ -9,16 +9,17 @@
 
 int main(int argc, char* argv[])
 {
-    if (argc < 5)
+    if (argc < 6)
     {
-        std::cerr << "Usage 'robotIp' 'reset head(bool)' 'noos_user' 'noos_pass' " << std::endl;
+        std::cerr << "Usage 'robotIp' 'reset head(bool)' 'noos_user' 'noos_pass' 'ip_platform'" << std::endl;
         return 1;
     }
 
     const std::string robotIp(argv[1]);
     configuration parameters;
     parameters.set_ip_nao(robotIp);
-    parameters.set_noos(std::string(argv[3]), 
+    parameters.set_noos(std::string(argv[5]),
+                        std::string(argv[3]), 
                         std::string(argv[4]));
 
     decide_action actions;
@@ -33,7 +34,7 @@ int main(int argc, char* argv[])
     else {
         move_head head;
         float angle_zero = 0.0f;
-        head.move(angle_zero, 2.0f);
+        head.move(angle_zero, angle_zero, 2.0f);
         head.stop();
         nao_walk walk(false);
         walk.stop_posture();

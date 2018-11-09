@@ -8,7 +8,6 @@ timer::timer(boost::asio::io_service & io,
   time_wait_(time)
 {
     timer_.async_wait(boost::bind(&timer::loop, this));
-    
 }
 
 void timer::loop()

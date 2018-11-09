@@ -25,6 +25,9 @@ public:
     ///@brief stop_posture the posture
     void stop_posture();
 
+    ///@brief go to default posture
+    void default_posture();
+
 private:
     AL::ALMotionProxy motion_;
     AL::ALRobotPostureProxy robotPosture_;

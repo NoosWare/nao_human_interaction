@@ -33,8 +33,10 @@ struct mat_to_pic
 struct face_location
 {
     ///@return true if the image is centred
-    void operator()(float middle,
+    void operator()(float middleX,
+                    float middleY,
                     float & angle,
+                    float & pitch_ang,
                     float & time);
 };
 

@@ -38,13 +38,15 @@ void decide_action::do_action()
     if (latest_state.face.face_found &&
         latest_state.head_data.angle_head != 0) {
         move_head::move(latest_state.head_data.angle_head,
+                        latest_state.head_data.angle_head_p,
                         latest_state.head_data.movement_time); 
-        if (!check_walk(latest_state)) {
+        if (latest_state.face.close_face) {
             game::play(latest_state);
         }
     }
     else { 
         game::say_dif();
+        nao_walk::default_posture();
     }
 }
 
@@ -61,7 +63,7 @@ bool decide_action::check_walk(state lstate)
     float zero = 0.0f;
     if (!lstate.face.close_face) {
         nao_walk::walk(distance_, zero, lstate.head_data.angle_head);
-        move_head::move(zero, lstate.head_data.movement_time);
+        move_head::move(zero, zero, lstate.head_data.movement_time);
         return true;
     }
     return false;

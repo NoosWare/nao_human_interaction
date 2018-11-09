@@ -46,7 +46,9 @@ void nao_state::face_callback(std::vector<noos::object::person> faces)
         bigger_face()(faces, i, max_size);
         if (max_size > 20) { 
             face_location()(faces.at(i).face_rect.top_left_x + max_size/2,
+                            faces.at(i).face_rect.top_left_x + (faces.at(i).face_rect.bottom_right_x - faces.at(i).face_rect.top_left_x)/2,
                             state_.head_data.angle_head,
+                            state_.head_data.angle_head_p,
                             state_.head_data.movement_time);
             state_.face.face_found = true;
             state_.face.label = faces.at(i).label;

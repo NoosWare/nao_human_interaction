@@ -22,6 +22,11 @@ void nao_walk::walk(float x,
     //motion_.waitUntilMoveIsFinished();
 }
 
+void nao_walk::default_posture()
+{
+    robotPosture_.goToPosture("StandInit", 0.5f);
+}
+
 bool nao_walk::has_finished()
 {
    return !motion_.moveIsActive(); 

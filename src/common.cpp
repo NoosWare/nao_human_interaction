@@ -55,14 +55,19 @@ noos::object::picture mat_to_pic::operator()(cv::Mat img)
     return noos::object::picture(conversion);
 }
 
-void face_location::operator()(float middle,
+void face_location::operator()(float middleX,
+                               float middleY,
                                float & angle,
+                               float & pitch_ang,
                                float & time)
 {
     time = 0.5f;
     //size of the image 320 x 240 pixels
     //max angle of vision of the camera is 61 degrees(1.06 rad)
-    angle = ((middle * 1.06 / 320) - 0.53) * (-1);
+    angle = ((middleX * 1.06 / 320) - 0.53) * (-1);
+    //max angle of vision of the camera is 47 degrees(0.82 rad)
+    pitch_ang = ((middleY * 0.82 / 240) - 0.41) * (-1);
+ 
 }
 
 void bigger_face::operator()(const std::vector<noos::object::person> faces,

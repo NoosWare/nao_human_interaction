@@ -7,7 +7,7 @@ void game::play(const state & latest)
        start(); 
        return;
     }
-    nao_talk::presentation();
+    //nao_talk::presentation();
     present_ = false;
 }
 
@@ -21,7 +21,7 @@ void game::start()
 
 void game::say_data()
 {
-    check_person();
+    //check_person();
     std::string data = nao_talk::animation["doubt"] +
                       "Your age range is " + latest_.face.age + "." +
                       "You look like a " + latest_.face.gender + "." + 
@@ -35,25 +35,25 @@ void game::say_dif()
 {
     std::string sentence;
     switch(counter_) {
-        case 3:
+        case 10:
             sentence = nao_talk::animation["me"] +
                        "Someone should be in front of me to start the demo." +
                        nao_talk::animation["s_me"];
             counter_++;
             break;
-        case 7:
+        case 20:
             sentence = nao_talk::animation["beg"] +
                        "Nobody wants to play with me?" +
                        nao_talk::animation["s_beg"];
             counter_++;
             break; 
-        case 12:
+        case 40:
             sentence = nao_talk::animation["happy"] +
                        "Come on! I'm free! Come an play!" +
                        nao_talk::animation["s_happy"];
             counter_++;
             break;
-        case 15:
+        case 80:
             counter_ = 0;
             break;
         default:

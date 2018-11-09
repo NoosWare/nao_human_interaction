@@ -1,6 +1,7 @@
 #include "move_head.hpp"
 
 const AL::ALValue move_head::jointName__ = "HeadYaw";
+const AL::ALValue move_head::jointNamePitch__ = "HeadPitch";
 
 move_head::move_head()
 : motion__(robot_ip::ip, 9559)
@@ -17,6 +18,7 @@ move_head::move_head()
 }
 
 void move_head::move(float & angle,
+                     float & pitch,
                      float time)
 {
 
@@ -32,7 +34,12 @@ void move_head::move(float & angle,
     * desired angles at the desired times.
     */
     motion__.angleInterpolation(jointName__, targetAngles, targetTimes, isAbsolute);
-    
+
+    //Pitch
+    check_pitch(pitch);
+    /** Set the target angle list, in radians. */
+    targetAngles = pitch;
+    motion__.angleInterpolation(jointNamePitch__, targetAngles, targetTimes, isAbsolute);
 }
 
 void move_head::stop()
@@ -53,6 +60,19 @@ bool move_head::check_angle(float & angle)
     }
     if (angle > 1.5) {
         angle = 1.5;
+        return true;
+    } 
+    return false;
+}
+
+bool move_head::check_pitch(float & angle)
+{
+    if (angle < -0.5) {
+        angle = -0.5;
+        return true;
+    }
+    if (angle > 0.5) {
+        angle = 0.5;
         return true;
     } 
     return false;
